@@ -1,0 +1,26 @@
+{
+  "name": "smart_lift",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "file-system": "^2.2.2",
+    "fs": "0.0.1-security",
+    "jsonwebtoken": "^8.4.0",
+    "jssha": "^2.3.1",
+    "mongoose": "^5.4.4",
+    "nodemailer": "^5.1.1",
+    "request": "^2.88.0",
+    "rimraf": "^2.6.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jagdish Singh",
+  "license": "ISC"
+}
