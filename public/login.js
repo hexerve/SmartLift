@@ -19,14 +19,15 @@ function validationDisplay(status, field) {
 
 $(function () {
     validate = function () {
-        var form = $("#register");
-        var data = getFormData(form);
+        // var form = $("#register");
+        // var data = getFormData(form);
         let count = 0;
         for (let key in errRegister) {
             if (errRegister[key] === false)
                 count++;
         }
         if (count < 7) {
+            alert("please fill all the credentials correctly");
             return false;
         } else {
             return true;
@@ -34,7 +35,7 @@ $(function () {
 
     }
 
-    $('#name').on('change', function () {
+    $('#name').on('keyup', function () {
         let name = $('#name').val()
         if (name.length < 3) {
             validationDisplay(false, 'name');
@@ -45,7 +46,7 @@ $(function () {
         }
     });
 
-    $('#mobile').on('change', function () {
+    $('#mobile').on('keyup', function () {
         let mobile = $('#mobile').val()
         if (isNaN(mobile)) {
             validationDisplay(false, 'mobile');
@@ -56,7 +57,7 @@ $(function () {
         }
     });
 
-    $('#floor').on('change', function () {
+    $('#floor').on('keyup', function () {
         let floor = $('#floor').val()
         if (isNaN(floor)) {
             validationDisplay(false, 'floor');
@@ -65,7 +66,7 @@ $(function () {
         }
     });
 
-    $('#flat').on('change', function () {
+    $('#flat').on('keyup', function () {
         let flat = $('#flat').val()
         if (isNaN(flat)) {
             validationDisplay(false, 'flat');
@@ -74,7 +75,7 @@ $(function () {
         }
     });
 
-    $('#building').on('change', function () {
+    $('#building').on('keyup', function () {
         let building = $('#building').val()
         if (building.length < 3) {
             validationDisplay(false, 'building');
@@ -85,7 +86,7 @@ $(function () {
         }
     });
 
-    $('#email').on('change', function () {
+    $('#email').on('keyup', function () {
         let email = $('#email').val()
         if (email != "" && email.lastIndexOf('.') != -1 && email.lastIndexOf('@') != -1 &&
             email.lastIndexOf('.') - email.lastIndexOf("@") > 2) {
@@ -95,7 +96,7 @@ $(function () {
         }
     });
 
-    $('#password').on('change', function () {
+    $('#password').on('keyup', function () {
         let password = $('#password').val()
         if (password.length < 8) {
             validationDisplay(false, 'password');

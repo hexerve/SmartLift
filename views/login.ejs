@@ -22,7 +22,7 @@
 
 <body>
     <div class="container">
-        <form name="register" action="/register" id="register" method="post" enctype="multipart/form-data" onsubmit="validate()">
+        <form name="register" action="/register" id="register" method="post" enctype="multipart/form-data" onsubmit="return validate()">
 
             <div class="form-group row">
                 <label for="rentAgreement" class="col-sm-2 col-form-label custom-file-label">Rent Agreement</label>
@@ -75,11 +75,11 @@
                 <div class="col-sm-7">
                     <input type="password" class="form-control" name="password" id="password" placeholder="Password">
                 </div>
-                <div class="col-sm-3">
+                <!-- <div class="col-sm-3">
                     <small id="passwordHelp" class="text-danger">
                         Must be 8-20 characters long.
                     </small>
-                </div>
+                </div> -->
             </div>
 
             <input type="submit">
