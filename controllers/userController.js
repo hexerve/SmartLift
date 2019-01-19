@@ -97,9 +97,8 @@ module.exports.register = function (req, res) {
 };
 
 module.exports.login = function (req, res) {
-
     User.findOne({
-        email: req.body.email
+        email: req.body.email1
     }, function (err, user) {
 
         if (err) {
@@ -111,7 +110,7 @@ module.exports.login = function (req, res) {
             return responses.errorMsg(res, 404, "Not Found", "user not found", null);
         }
 
-        var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
+        var passwordIsValid = bcrypt.compareSync(req.body.password1, user.password);
 
         if (!passwordIsValid) {
             errors = {

@@ -1,5 +1,6 @@
-var validate;
+var validate, validateLogin;
 var errRegister = { name: true, mobile: true, floor: true, flat: true, buiding: true, email: true, password: true };
+var errRegister1 = { email1: true, password1: true };
 
 function validationDisplay(status, field) {
     if (status == true) {
@@ -27,6 +28,16 @@ $(function () {
                 count++;
         }
         if (count < 7) {
+            alert("please fill all the credentials correctly");
+            return false;
+        } else {
+            return true;
+        }
+
+    }
+
+    validateLogin = function () {
+        if (errRegister1.email1 === true || errRegister1.password === true) {
             alert("please fill all the credentials correctly");
             return false;
         } else {
@@ -102,6 +113,41 @@ $(function () {
             validationDisplay(false, 'password');
         } else {
             validationDisplay(true, 'password');
+        }
+    });
+
+    $('#email1').on('keyup', function () {
+        let email = $('#email1').val()
+        if (email != "" && email.lastIndexOf('.') != -1 && email.lastIndexOf('@') != -1 &&
+            email.lastIndexOf('.') - email.lastIndexOf("@") > 2) {
+            errRegister1['email1'] = false;
+            $('#' + 'email1').removeClass('is-invalid');
+            $('#' + 'email1').addClass('is-valid');
+            $('#' + 'email1' + '_label').removeClass('text-danger');
+            $('#' + 'email1' + '_label').addClass('text-success');
+        } else {
+            errRegister1['email1'] = true;
+            $('#' + 'email1').removeClass('is-valid');
+            $('#' + 'email1').addClass('is-invalid');
+            $('#' + 'email1' + '_label').removeClass('text-success');
+            $('#' + 'email1' + '_label').addClass('text-danger');
+        }
+    });
+
+    $('#password1').on('keyup', function () {
+        let password = $('#password1').val()
+        if (password.length < 8) {
+            errRegister1['password1'] = true;
+            $('#' + 'password1').removeClass('is-valid');
+            $('#' + 'password1').addClass('is-invalid');
+            $('#' + 'password1' + '_label').removeClass('text-success');
+            $('#' + 'password1' + '_label').addClass('text-danger');
+        } else {
+            errRegister1['password1'] = false;
+            $('#' + 'password1').removeClass('is-invalid');
+            $('#' + 'password1').addClass('is-valid');
+            $('#' + 'password1' + '_label').removeClass('text-danger');
+            $('#' + 'password1' + '_label').addClass('text-success');
         }
     });
 
