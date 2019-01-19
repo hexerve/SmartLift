@@ -9,6 +9,7 @@
     "ejs": "^2.6.1",
     "express": "^4.16.4",
     "file-system": "^2.2.2",
+    "formidable": "^1.2.1",
     "fs": "0.0.1-security",
     "jsonwebtoken": "^8.4.0",
     "jssha": "^2.3.1",
