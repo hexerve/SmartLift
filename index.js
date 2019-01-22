@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '50mb'}));
 
 mongoose.Promise = global.Promise;
 mongoose.connect(config.database, {

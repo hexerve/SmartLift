@@ -1,4 +1,4 @@
-var validate, validateLogin;
+var validate, signIn;
 var errRegister = { name: true, mobile: true, floor: true, flat: true, buiding: true, email: true, password: true };
 var errRegister1 = { email1: true, password1: true };
 
@@ -20,8 +20,8 @@ function validationDisplay(status, field) {
 
 $(function () {
     validate = function () {
-        // var form = $("#register");
-        // var data = getFormData(form);
+        var form = $("#register");
+        var data1 = getFormData(form);
         let count = 0;
         for (let key in errRegister) {
             if (errRegister[key] === false)
@@ -36,11 +36,36 @@ $(function () {
 
     }
 
-    validateLogin = function () {
+    signIn = function () {
         if (errRegister1.email1 === true || errRegister1.password === true) {
             alert("please fill all the credentials correctly");
             return false;
         } else {
+            $.ajax({
+                url: "/login",
+                type: 'POST',
+                data: JSON.stringify(getFormData($('#login'))),
+                contentType: 'application/json',
+                success: function (data) {
+                    setCookie("token", data.results.token, 1);
+                    window.location.href = "/";
+    
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    var errMsg;
+                    if (xhr.status === 0) {
+                        errMsg = "Network error.";
+                    } else {
+                        errMsg = JSON.parse(xhr.responseText).message;
+                        errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
+    
+                        if (errMsg === 'Validation failed.') {
+                            errMsg += '<br/>Incorrect ' + JSON.parse(xhr.responseText).errors.index.join(", ");
+                        }
+                    }
+                    alert(errMsg);
+                }
+            });
             return true;
         }
 

@@ -18,17 +18,18 @@ var responses = require('../helper/responses');
 var AuthoriseUser = require('../helper/authoriseUser');
 
 module.exports.register = function (req, res) {
-    // console.log(req)
+
+    //  console.log(req)
     var form = new formidable.IncomingForm();
     form.parse(req, function (err, fields, files) {
-        if(files.rentAgreement.size === 0){
-            console.log("no file");
+        if(files.rentAgreement == undefined || files.rentAgreement.size === 0){
+            console.log("no file", files);
             return responses.errorMsg(res, 400, "Bad Request", "validation failed.", "attachment required");
         }
         var oldpath = files.rentAgreement.path;
         var name = files.rentAgreement.name.split('.');
         name = name[name.length - 1];
-        var newpath = 'downloads/' + new Date().getTime() + (Math.floor(Math.random() * 1000)) + '.' + name;
+        var newpath = 'public/assets/' + new Date().getTime() + (Math.floor(Math.random() * 1000)) + '.' + name;
         fs.rename(oldpath, newpath, function (err) {
             if (err) 
                 console.log(err);

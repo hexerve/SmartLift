@@ -23,7 +23,6 @@
 <body>
     <div class="container">
         <form name="register" action="/register" id="register" method="post" enctype="multipart/form-data" onsubmit="return validate()">
-
             <div class="form-group row">
                 <label for="rentAgreement" class="col-sm-2 col-form-label custom-file-label">Rent Agreement</label>
                 <div class="col-sm-7">
@@ -86,7 +85,7 @@
 
         </form>
 
-        <form name="login" action="/login" id="login" method="post" onsubmit="return validateLogin()">
+        <form name="login" id="login">
             <div class="form-group row">
                 <label for="email1" id="email1_label" class="col-sm-2 col-form-label">Email</label>
                 <div class="col-sm-7">
@@ -101,7 +100,7 @@
                 </div>
             </div>
 
-            <input type="submit">
+            <input type="button" value="Login" onclick="signIn()">
 
         </form>
     </div>
