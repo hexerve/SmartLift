@@ -29,8 +29,8 @@ module.exports.register = function (req, res) {
         var oldpath = files.rentAgreement.path;
         var name = files.rentAgreement.name.split('.');
         name = name[name.length - 1];
-        var newpath = 'public/assets/' + new Date().getTime() + (Math.floor(Math.random() * 1000)) + '.' + name;
-        fs.rename(oldpath, newpath, function (err) {
+        var newpath = '' + new Date().getTime() + (Math.floor(Math.random() * 1000)) + '.' + name;
+        fs.rename(oldpath, 'public/assets/' + newpath, function (err) {
             if (err) 
                 console.log(err);
         });
@@ -40,10 +40,19 @@ module.exports.register = function (req, res) {
         fields.password = hashedPassword;
         fields.isAdmin = false;
         fields.rentAgreement = newpath;
+        fields.address = {
+            floor: fields.floor,
+            flat: fields.flat,
+            building: fields.building
+        }
+        fields.floor = undefined;
+        fields.flat = undefined;
+        fields.building = undefined;
+        
         User.create(fields,
             function (err, user) {
                 if (err) {
-                    rimraf(newpath, function () {});
+                    rimraf('public/assets/' + newpath, function () {});
 
                     if ((err.name && err.name == "UserExistsError") || (err.code && err.code == 11000)) {
                         return responses.errorMsg(res, 409, "Conflict", "user already exists.", null);
@@ -790,7 +799,7 @@ module.exports.userVerificationList = function (req, res) {
         user.__v = undefined;
 
         if (user.isAdmin) {
-            User.find({active: false}, { __v:0 ,password: 0, revoke_count: 0 }, function (err, users) {
+            User.find({isVerified: false}, { __v:0 ,password: 0, revoke_count: 0 }, function (err, users) {
                 if (err) {
                     console.log(err);
                     return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);

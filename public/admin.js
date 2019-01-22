@@ -69,15 +69,24 @@ $(function () {
                         users[i].mobile +
                         '</div>' +
                         '<div class="col-md-4">' +
-                        users[i].flat +
+                        'flat: ' + users[i].address.flat +
                         '</div>' +
                         '<div class="col-md-4">' +
-                        users[i].floor +
+                        'floor: ' + users[i].address.floor +
                         '</div>' +
                         '<div class="col-md-4">' +
-                        users[i].building +
+                        'building: ' + users[i].address.building +
+                        '</div>' +
+                        '<div class="col-md-12">' +
+
+                        'document: <a href="http://localhost:3000/pdf/' + users[i].rentAgreement + '" target="_blank"> click here to open</a>' +
                         '</div>' +
                         '</div>' +
+                        '<object data="http://localhost:3000/pdf/' + users[i].rentAgreement + '" type="application/pdf" width="100%" height="800px">' + 
+                        '<p>It appears you don\'t have a PDF plugin for this browser.' +
+                            'No biggie... you can <a href="' + users[i].rentAgreement + '">click here to' +
+                            'download the PDF file.</a></p>' +  
+                        '</object>' +
                         '</div>' +
                         '</div>' +
                         '</div>'

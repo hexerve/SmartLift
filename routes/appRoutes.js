@@ -93,6 +93,12 @@ module.exports = function (app) {
         }
     });
 
+    app.get('/pdf/:file', function (req, res) {
+        var data =fs.readFileSync('./public/assets/' + req.params.file);
+        res.contentType("application/pdf");
+        res.send(data);
+    });
+
     // star routes
     app.get('*', function (req, res) {
         res.redirect(301, "../");
