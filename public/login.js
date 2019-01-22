@@ -19,6 +19,10 @@ function validationDisplay(status, field) {
 }
 
 $(function () {
+    if (getCookie("token") !== "") {
+        window.location.href = "/";
+    }
+
     validate = function () {
         var form = $("#register");
         var data1 = getFormData(form);
@@ -49,7 +53,6 @@ $(function () {
                 success: function (data) {
                     setCookie("token", data.results.token, 1);
                     window.location.href = "/";
-    
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     var errMsg;
