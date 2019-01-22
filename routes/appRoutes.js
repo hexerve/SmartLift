@@ -78,6 +78,8 @@ module.exports = function (app) {
 
     app.put("/adminAcesss/user", VerifyToken, User.updateUser);
 
+    app.get("/adminAcesss/user/verification", VerifyToken, User.userVerificationList);
+
     app.post("/adminAcesss/register", VerifyToken, User.registerUserByAdmin);
 
     app.post('/verify/email', User.sendVerificationLink);

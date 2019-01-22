@@ -783,3 +783,23 @@ module.exports.updatePersonalInfo = function (req, res) {
             });
     });
 };
+
+module.exports.userVerificationList = function (req, res) {
+    AuthoriseUser.getUser(req, res, function (user) {
+        user.password = undefined;
+        user.__v = undefined;
+
+        if (user.isAdmin) {
+            User.find({active: false}, { __v:0 ,password: 0, revoke_count: 0 }, function (err, users) {
+                if (err) {
+                    console.log(err);
+                    return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+                }
+
+                return responses.successMsg(res, users);
+            });            
+        } else {
+            return responses.errorMsg(res, 401, "Unauthorized", "failed to authenticate token.", null);
+        }
+    });
+};
