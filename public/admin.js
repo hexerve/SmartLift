@@ -48,6 +48,20 @@ $(function () {
                 )
 
                 for (let i = 0; i < users.length; i++) {
+                    let rentAgreement = users[i].rentAgreement.split('.');
+                    let proof, proofLink;
+                    if ((rentAgreement[rentAgreement.length - 1]).toLowerCase() === "pdf") {
+                        proofLink = 'document: <a href="http://localhost:3000/pdf/' + users[i].rentAgreement + '" target="_blank"> click here to open</a>';
+                        proof = '<object data="http://localhost:3000/pdf/' + users[i].rentAgreement + '" type="application/pdf" width="100%" height="800px">' +
+                            '<p>It appears you don\'t have a PDF plugin for this browser.' +
+                            'No biggie... you can <a href="' + users[i].rentAgreement + '">click here to' +
+                            'download the PDF file.</a></p>' +
+                            '</object>';
+                    } else {
+                        proofLink = 'document: <a href="assets/' + users[i].rentAgreement + '" target="_blank"> click here to open</a>';
+                        proof = '<img src="assets/' + users[i].rentAgreement + '" class="img-fluid" />'
+                    }
+
                     $('#accordion').append(
                         '<div class="card">' +
                         '<div class="card-header" id="heading' + i + '">' +
@@ -78,15 +92,10 @@ $(function () {
                         'building: ' + users[i].address.building +
                         '</div>' +
                         '<div class="col-md-12">' +
-
-                        'document: <a href="http://localhost:3000/pdf/' + users[i].rentAgreement + '" target="_blank"> click here to open</a>' +
+                        proofLink +
                         '</div>' +
                         '</div>' +
-                        '<object data="http://localhost:3000/pdf/' + users[i].rentAgreement + '" type="application/pdf" width="100%" height="800px">' + 
-                        '<p>It appears you don\'t have a PDF plugin for this browser.' +
-                            'No biggie... you can <a href="' + users[i].rentAgreement + '">click here to' +
-                            'download the PDF file.</a></p>' +  
-                        '</object>' +
+                        proof +
                         '</div>' +
                         '</div>' +
                         '</div>'
