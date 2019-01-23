@@ -63,11 +63,12 @@ $(function () {
                     }
 
                     $('#accordion').append(
-                        '<div class="card">' +
+                        '<div class="card" id="card_' + users[i]._id + '">' +
                         '<div class="card-header" id="heading' + i + '">' +
                         '<h5 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapse' + i + '" aria-expanded="false"' +
                         'aria-controls="collapse' + i + '">' +
                         users[i].email +
+                        '<button type="button" id="verify_' + users[i]._id +  '")" class="btn btn-secondary float-md-right verify">Verify</button>' +
                         '</h5>' +
                         '</div>' +
                         '<div id="collapse' + i + '" class="collapse" aria-labelledby="heading' + i + '" data-parent="#accordion">' +
@@ -112,5 +113,53 @@ $(function () {
                 alert("network error");
                 return;
             }
+        });
+
+        $(document).on('click', '.verify', function(e){
+            e.preventDefault();
+            e.stopPropagation();
+            data = {};
+            data.id =this.id.split('_')[1];
+            
+
+            $.ajax({
+                url: "../adminAcesss/user/verification",
+                type: 'PUT',
+                data: JSON.stringify(data),
+                contentType: 'application/json',
+                success: function (result) {
+                    // $('.alert').hide(500);
+                    // $('#list-msg').append(
+                    //     '<div class="alert alert-success alert-dismissible fade show">' +
+                    //     '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                    //     '<strong>Congratulations! </strong> User has been succesfully updated.' +
+                    //     '</div>'
+                    // );
+                    alert("success");
+                    $('#card_' + data.id).hide('slow', function(){ $target.remove(); });
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    var errMsg;
+                    if (xhr.status === 0) {
+                        errMsg = "Network error.";
+                    } else {
+                        errMsg = JSON.parse(xhr.responseText).message;
+                        errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
+    
+                        if (errMsg === 'Validation failed.') {
+                            errMsg += '<br/>Incorrect ' + JSON.parse(xhr.responseText).errors.index.join(", ");
+                        }
+                    }
+    
+                    // $('.alert').hide(500);
+                    // $('#list-msg').append(
+                    //     '<div class="alert alert-danger alert-dismissible fade show">' +
+                    //     '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                    //     '<strong>Oops! </strong> ' + errMsg +
+                    //     '</div>'
+                    // );
+                    alert(errMsg);
+                }
+            });
         });
 });

@@ -812,3 +812,45 @@ module.exports.userVerificationList = function (req, res) {
         }
     });
 };
+
+module.exports.userProofVerify = function (req, res) {
+    AuthoriseUser.getUser(req, res, function (user) {
+        user.password = undefined;
+        user.__v = undefined;
+
+        if (user.isAdmin) {
+            User.findOneAndUpdate({
+                _id: req.body.id
+            },
+                {
+                    isVerified: true
+                },
+                function (err, user) {
+                    if (err) {
+                        if (err.name && err.name == "ValidationError") {
+                            errors = {
+                                "index": Object.keys(err.errors)
+                            };
+                            return responses.errorMsg(res, 400, "Bad Request", "validation failed.", errors);
+
+                        } else if (err.name && err.name == "CastError") {
+                            errors = {
+                                "index": err.path
+                            };
+                            return responses.errorMsg(res, 400, "Bad Request", "cast error.", errors);
+
+                        } else {
+                            console.log(err);
+                            return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+                        }
+                    }
+                    if (!user) {
+                        return responses.errorMsg(res, 404, "Not Found", "user not found", null);
+                    }
+                    return responses.successMsg(res, null);
+                });
+        } else {
+            return responses.errorMsg(res, 401, "Unauthorized", "failed to authenticate token.", null);
+        }
+    });
+};
