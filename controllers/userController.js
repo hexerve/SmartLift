@@ -210,13 +210,17 @@ module.exports.current_user = function (req, res) {
 module.exports.stats = function (req, res) {
     AuthoriseUser.getUser(req, res, function (user) {
         if (user.isAdmin) {
-            User.find({}, { name: 1, email: 1, expires: 1, mobile: 1 }, function (err, count) {
+            User.aggregate( [
+                    // { $match : { isAdmin: false }},
+                { "$sort": { "isVerified": 1 } },
+                { "$project" : { __v: 0, password: 0 }},
+            ]).exec(function (err, users) {
                 if (err) {
                     console.log(err);
                     return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
                 }
 
-                return responses.successMsg(res, count);
+                return responses.successMsg(res, users);
             });
         } else {
             return responses.errorMsg(res, 401, "Unauthorized", "failed to authenticate token.", null);

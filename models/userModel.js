@@ -27,7 +27,7 @@ var UserSchema = new Schema({
     default: false
   },
   isVerified: {
-    type: String,
+    type: Boolean,
     default: false
   },
   email: {
