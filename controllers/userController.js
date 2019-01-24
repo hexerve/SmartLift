@@ -22,7 +22,7 @@ module.exports.register = function (req, res) {
     //  console.log(req)
     var form = new formidable.IncomingForm();
     form.parse(req, function (err, fields, files) {
-        if(files.rentAgreement == undefined || files.rentAgreement.size === 0){
+        if (files.rentAgreement == undefined || files.rentAgreement.size === 0) {
             console.log("no file", files);
             return responses.errorMsg(res, 400, "Bad Request", "validation failed.", "attachment required");
         }
@@ -31,10 +31,10 @@ module.exports.register = function (req, res) {
         name = name[name.length - 1];
         var newpath = '' + new Date().getTime() + (Math.floor(Math.random() * 1000)) + '.' + name;
         fs.rename(oldpath, 'public/assets/' + newpath, function (err) {
-            if (err) 
+            if (err)
                 console.log(err);
         });
-                
+
         var hashedPassword = bcrypt.hashSync(fields.password, 8);
 
         fields.password = hashedPassword;
@@ -48,11 +48,11 @@ module.exports.register = function (req, res) {
         fields.floor = undefined;
         fields.flat = undefined;
         fields.building = undefined;
-        
+
         User.create(fields,
             function (err, user) {
                 if (err) {
-                    rimraf('public/assets/' + newpath, function () {});
+                    rimraf('public/assets/' + newpath, function () { });
 
                     if ((err.name && err.name == "UserExistsError") || (err.code && err.code == 11000)) {
                         return responses.errorMsg(res, 409, "Conflict", "user already exists.", null);
@@ -210,10 +210,10 @@ module.exports.current_user = function (req, res) {
 module.exports.stats = function (req, res) {
     AuthoriseUser.getUser(req, res, function (user) {
         if (user.isAdmin) {
-            User.aggregate( [
-                    // { $match : { isAdmin: false }},
+            User.aggregate([
+                // { $match : { isAdmin: false }},
                 { "$sort": { "isVerified": 1 } },
-                { "$project" : { __v: 0, password: 0 }},
+                { "$project": { __v: 0, password: 0 } },
             ]).exec(function (err, users) {
                 if (err) {
                     console.log(err);
@@ -327,12 +327,10 @@ module.exports.verify = function (req, res) {
             } else {
 
                 let time = new Date();
-                let expires = time.setDate(time.getDate() + 15);
                 User.findOneAndUpdate({
                     _id: req.id
                 }, {
                         isVerifiedEmail: true,
-                        expires: expires
                     }, function (err, user) {
                         if (err) {
                             // return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
@@ -528,14 +526,8 @@ module.exports.getUserData = function (req, res) {
             User.findOne(
                 data,
                 {
-                    email: 1,
-                    mobile: 1,
-                    name: 1,
-                    expires: 1,
-                    isAdmin: 1,
-                    last_login_timestamp: 1,
-                    revoke_count: 1,
-                    active: 1
+                    password: 0,
+                    __v: 0
                 }, function (err, user) {
                     if (err) {
                         console.log(err);
@@ -546,22 +538,7 @@ module.exports.getUserData = function (req, res) {
                         return responses.errorMsg(res, 404, "Not Found", "user not found.", null);
                     }
 
-                    let temp = user.expires;
-                    temp = user.expires - (new Date());
-                    temp = parseInt(temp / (3600000 * 24));
-                    // let time = new Date();
-                    // let expires = time.setDate(time.getDate() + 15);
-                    return responses.successMsg(res, {
-                        user: {
-                            email: user.email,
-                            mobile: user.mobile,
-                            name: user.name,
-                            isAdmin: user.isAdmin,
-                            last_login_timestamp: new Date(user.last_login_timestamp).getTime(),
-                            revoke_count: user.revoke_count,
-                            active: user.active
-                        }
-                    });
+                    return responses.successMsg(res, { user });
                 });
 
         } else {
@@ -577,25 +554,12 @@ module.exports.updateUser = function (req, res) {
         user.__v = undefined;
 
         if (user.isAdmin) {
-            let data = {};
-
-            if (req.body.isAdmin !== "" && req.body.isAdmin !== undefined) {
-                let val = (req.body.isAdmin).toLowerCase();
-                if (val === "true") {
-                    data.isAdmin = true;
-
-                    let time = new Date();
-                    data.expires = time.setDate(time.getDate() + 36500); // approx 100 years
-
-                } else {
-                    data.isAdmin = false;
-                }
-            }
-
             User.findOneAndUpdate({
                 email: req.body.email
             },
-                data,
+                {  
+                    $set: req.body
+                },
                 function (err, user) {
                     if (err) {
                         if (err.name && err.name == "ValidationError") {
@@ -803,14 +767,14 @@ module.exports.userVerificationList = function (req, res) {
         user.__v = undefined;
 
         if (user.isAdmin) {
-            User.find({isVerified: false}, { __v:0 ,password: 0, revoke_count: 0 }, function (err, users) {
+            User.find({ isVerified: false }, { __v: 0, password: 0, revoke_count: 0 }, function (err, users) {
                 if (err) {
                     console.log(err);
                     return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
                 }
 
                 return responses.successMsg(res, users);
-            });            
+            });
         } else {
             return responses.errorMsg(res, 401, "Unauthorized", "failed to authenticate token.", null);
         }

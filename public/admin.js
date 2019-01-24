@@ -343,10 +343,11 @@ $(function () {
 
                 $('#email1').val(data.results.user.email);
                 $('#mob1').val(data.results.user.mobile);
-                $('#name').val(data.results.user.name);
-                $('#plan').val(data.results.user.plan);
-                $('#isadmin').val("" + data.results.user.isAdmin);
-                $('#days').val(data.results.user.expires);
+                $('#name1').val(data.results.user.name);
+                $('#flat1').val(data.results.user.address.flat);
+                $('#floor1').val(data.results.user.address.floor);
+                $('#building1').val(data.results.user.address.building);
+                $('#isadmin1').val("" + data.results.user.isAdmin);
                 $('#revoke').val((last_login === 0) ? "" : new Date(last_login).toLocaleString());
                 $('#revoke_count').text("revoke(" + data.results.user.revoke_count + ")?")
                 $('#status').text(data.results.user.active ? "active" : "deactive");
@@ -427,9 +428,14 @@ $(function () {
     $(document).on('click', '#update-btn', function () {
         let data = {};
         data.email = $('#email1').val();
-        data.plan = $('#plan').val();
-        data.isAdmin = $('#isadmin').val();
-        data.days = $('#days').val();
+        data.name = $('#name1').val();
+        data.mobile = $('#mob1').val();
+        data.address = {
+            flat: $('#flat1').val(),
+            floor: $('#floor1').val(),
+            building: $('#building1').val()
+        };
+        data.isAdmin = $('#isadmin1').val();
 
         $.ajax({
             url: "../adminAcesss/user",
