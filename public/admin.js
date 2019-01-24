@@ -33,22 +33,25 @@ $(function () {
                             )
 
                             for (let i = 0; i < users.length; i++) {
-                                let rentAgreement = users[i].rentAgreement.split('.');
                                 let proof = '', proofLink = '', verifyButton = '';
-                                if(!users[i].isVerified){
+                                if (!users[i].isVerified) {
                                     verifyButton = '<button type="button" id="verify_' + users[i]._id + '")" class="btn btn-secondary float-md-right verify">Verify</button>';
                                 }
 
-                                if ((rentAgreement[rentAgreement.length - 1]).toLowerCase() === "pdf") {
-                                    proofLink = 'document: <a href="http://localhost:3000/pdf/' + users[i].rentAgreement + '" target="_blank"> click here to open</a>';
-                                    proof = '<object data="http://localhost:3000/pdf/' + users[i].rentAgreement + '" type="application/pdf" width="100%" height="800px">' +
-                                        '<p>It appears you don\'t have a PDF plugin for this browser.' +
-                                        'No biggie... you can <a href="' + users[i].rentAgreement + '">click here to' +
-                                        'download the PDF file.</a></p>' +
-                                        '</object>';
-                                } else {
-                                    proofLink = 'document: <a href="assets/' + users[i].rentAgreement + '" target="_blank"> click here to open</a>';
-                                    proof = '<img src="assets/' + users[i].rentAgreement + '" class="img-fluid" />'
+                                if (users[i].rentAgreement) {
+                                    let rentAgreement = users[i].rentAgreement.split('.');
+
+                                    if ((rentAgreement[rentAgreement.length - 1]).toLowerCase() === "pdf") {
+                                        proofLink = 'document: <a href="http://localhost:3000/pdf/' + users[i].rentAgreement + '" target="_blank"> click here to open</a>';
+                                        proof = '<object data="http://localhost:3000/pdf/' + users[i].rentAgreement + '" type="application/pdf" width="100%" height="800px">' +
+                                            '<p>It appears you don\'t have a PDF plugin for this browser.' +
+                                            'No biggie... you can <a href="' + users[i].rentAgreement + '">click here to' +
+                                            'download the PDF file.</a></p>' +
+                                            '</object>';
+                                    } else {
+                                        proofLink = 'document: <a href="assets/' + users[i].rentAgreement + '" target="_blank"> click here to open</a>';
+                                        proof = '<img src="assets/' + users[i].rentAgreement + '" class="img-fluid" />'
+                                    }
                                 }
 
                                 $('#accordion-stats').append(
@@ -79,7 +82,7 @@ $(function () {
                                     'floor: ' + users[i].address.floor +
                                     '</div>' +
                                     '<div class="col-md-4">' +
-                                    'building: ' + users[i].address.building +  
+                                    'building: ' + users[i].address.building +
                                     '</div>' +
                                     '<div class="col-md-12">' +
                                     proofLink +
@@ -482,9 +485,12 @@ $(function () {
         data.name = $('#name2').val();
         data.mobile = $('#mobile2').val();
         data.password = $('#pass2').val();
-        data.plan = $('#plan2').val();
         data.isAdmin = $('#isadmin2').val();
-        data.days = $('#days2').val();
+        data.address = {
+            flat: $('#flat2').val(),
+            floor: $('#floor2').val(),
+            building: $('#building2').val()
+        };
 
         if (data.days <= 0) {
             $('.alert').hide(500);

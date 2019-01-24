@@ -690,6 +690,7 @@ module.exports.registerUserByAdmin = function (req, res) {
 
             req.body.password = hashedPassword;
             req.body.isVerifiedEmail = true;
+            req.body.isVerified = true;
 
             User.create(req.body,
                 function (err, user) {
