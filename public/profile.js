@@ -96,4 +96,62 @@ $(function () {
         }
     });
 
+
+    $(document).on('click', '#add-btn', function () {
+        let email = $('#email').val();
+        let mobile = $('#mobile1').val();
+        let name = $('#name1').val();
+        
+        if (isEmail(email) && isMobile(mobile) && isText(name)) {
+            let data = {};
+            data.email = email;
+            data.name = name;
+            data.mobile = mobile;
+            $.ajax({
+                url: "../user/addMember",
+                type: 'POST',
+                data: JSON.stringify(data),
+                contentType: 'application/json',
+                success: function (result) {
+                    $('.alert').hide(500);
+                    $('#list-msg').append(
+                        '<div class="alert alert-success alert-dismissible fade show">' +
+                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                        '<strong>Congratulations! </strong> User succesfully added.' +
+                        '</div>'
+                    );
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    var errMsg;
+                    if (xhr.status === 0) {
+                        errMsg = "Network error.";
+                    } else {
+                        errMsg = JSON.parse(xhr.responseText).message;
+                        errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
+
+                        if (errMsg === 'Validation failed.') {
+                            errMsg += '<br/>Incorrect ' + JSON.parse(xhr.responseText).errors.index.join(", ");
+                        }
+                    }
+
+                    $('.alert').hide(500);
+                    $('#list-msg').append(
+                        '<div class="alert alert-danger alert-dismissible fade show">' +
+                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                        '<strong>Oops! </strong> ' + errMsg +
+                        '</div>'
+                    );
+                }
+            });
+        } else  {
+            $('.alert').hide(500);
+            $('#list-msg').append(
+                '<div class="alert alert-danger alert-dismissible fade show">' +
+                '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                '<strong>Oops! </strong>Please fill correct credentials' +
+                '</div>'
+            );
+        }
+    });
+
 });

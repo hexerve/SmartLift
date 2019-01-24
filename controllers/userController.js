@@ -557,7 +557,7 @@ module.exports.updateUser = function (req, res) {
             User.findOneAndUpdate({
                 email: req.body.email
             },
-                {  
+                {
                     $set: req.body
                 },
                 function (err, user) {
@@ -821,5 +821,71 @@ module.exports.userProofVerify = function (req, res) {
         } else {
             return responses.errorMsg(res, 401, "Unauthorized", "failed to authenticate token.", null);
         }
+    });
+};
+
+
+module.exports.addMember = function (req, res) {
+    AuthoriseUser.getUser(req, res, function (user) {
+        newUser = {
+            isVerified: true,
+            name: req.body.name,
+            mobile: req.body.mobile,
+            email: req.body.email,
+            address: user.address,
+            rentAgreement: user.rentAgreement,
+            password: user.password
+        }
+        User.create(newUser,
+            function (err, user) {
+                if (err) {
+                    if ((err.name && err.name == "UserExistsError") || (err.code && err.code == 11000)) {
+                        return responses.errorMsg(res, 409, "Conflict", "user already exists.", null);
+
+                    } else if (err.name && err.name == "ValidationError") {
+                        errors = {
+                            "index": Object.keys(err.errors)
+                        };
+                        return responses.errorMsg(res, 400, "Bad Request", "validation failed.", errors);
+
+                    } else if (err.name && err.name == "CastError") {
+                        errors = {
+                            "index": err.path
+                        };
+                        return responses.errorMsg(res, 400, "Bad Request", "cast error.", errors);
+
+                    } else {
+                        console.log(err);
+                        return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+                    }
+                }
+
+                // create a token
+                var token = jwt.sign({
+                    id: user._id
+                }, config.secret, {
+                        expiresIn: 86400 // expires in 24 hours
+                    });
+
+                Verification.create({
+                    userID: user._id,
+                    key: token
+                },
+                    function (err, verification) {
+                        if (err) {
+                            return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+                        } else {
+
+                            var link = 'localhost:3000/verify/email/' + token;
+
+                            Mail.verification_mail(req.body.email, link);
+
+                            return responses.successMsg(res, {
+                                email: req.body.email
+                            });
+                        }
+                    });
+
+            });
     });
 };

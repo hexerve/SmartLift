@@ -68,6 +68,8 @@ module.exports = function (app) {
 
     app.put("/user", VerifyToken, User.updatePersonalInfo);
 
+    app.post("/user/addMember", VerifyToken, User.addMember);
+
     app.get("/adminAcesss/user/:info/:value", VerifyToken, User.getUserData);
 
     app.get("/adminAcesss/status/:email/:status", VerifyToken, User.changeStatus);
