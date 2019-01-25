@@ -108,7 +108,7 @@ $(function () {
             data.name = name;
             data.mobile = mobile;
             $.ajax({
-                url: "../user/addMember",
+                url: "../user/member",
                 type: 'POST',
                 data: JSON.stringify(data),
                 contentType: 'application/json',
@@ -154,4 +154,33 @@ $(function () {
         }
     });
 
+
+    $(document).on('click', '#test', function(){
+        data = 
+        {members: "5c4adb7e8a475c14cfd0fc45"};
+        $.ajax({
+            url: "../user/member/",
+            type: 'GET',
+            // data: JSON.stringify(data),
+            contentType: 'application/json',
+            success: function (result) {
+                alert("success");
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                var errMsg;
+                if (xhr.status === 0) {
+                    errMsg = "Network error.";
+                } else {
+                    errMsg = JSON.parse(xhr.responseText).message;
+                    errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
+
+                    if (errMsg === 'Validation failed.') {
+                        errMsg += '<br/>Incorrect ' + JSON.parse(xhr.responseText).errors.index.join(", ");
+                    }
+                }
+
+                alert(errMsg)
+            }
+        });
+    })
 });

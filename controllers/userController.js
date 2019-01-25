@@ -17,6 +17,16 @@ Mail = require('../helper/mail');
 var responses = require('../helper/responses');
 var AuthoriseUser = require('../helper/authoriseUser');
 
+let addMemberToList = function (userId, memberId) {
+    User.findByIdAndUpdate(userId, {
+        $push: {
+            members: mongoose.Types.ObjectId(memberId)
+        }
+    }, function (err, res) {
+        if (err) console.log(err);
+    })
+}
+
 module.exports.register = function (req, res) {
 
     //  console.log(req)
@@ -825,6 +835,68 @@ module.exports.userProofVerify = function (req, res) {
 };
 
 
+module.exports.removeMember = function (req, res) {
+    if (!req.id || req.id.length !== 24) {
+        return responses.errorMsg(res, 401, "Unauthorized", "failed to authenticate token.", null);
+    }
+
+    User.findOneAndUpdate({
+        _id: req.id,
+        members: mongoose.Types.ObjectId(req.body.members)
+    }, {
+            $pull: {
+                members: mongoose.Types.ObjectId(req.body.members)
+            }
+        }, function (err, user) {
+
+            if (err) {
+                console.log(err)
+                return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+            }
+
+            if (!user) {
+                return responses.errorMsg(res, 404, "Not Found", "user not found.", null);
+            }
+
+            User.findByIdAndUpdate({
+                _id: req.body.members
+            }, {
+                    isVerified: false
+                },
+                function (err, result) {
+                    if (err) {
+                        console.log(err)
+                        return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+                    }
+                    return responses.successMsg(res, null);
+                })
+        });
+};
+
+module.exports.viewMember = function (req, res) {
+    if (!req.id || req.id.length !== 24) {
+        return responses.errorMsg(res, 401, "Unauthorized", "failed to authenticate token.", null);
+    }
+
+    User.findById(req.id, {
+        password: 0,
+        __v: 0
+    })
+        .populate("members", "-__v")
+        .exec(
+            function (err, members) {
+                if (err) {
+                    console.log(err);
+                    return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+                }
+
+                if (members.length < 1) {
+                    return responses.errorMsg(res, 404, "Not Found", "transactions not found.", null);
+                }
+                return responses.successMsg(res, members.members);
+            });
+};
+
 module.exports.addMember = function (req, res) {
     AuthoriseUser.getUser(req, res, function (user) {
         newUser = {
@@ -837,7 +909,7 @@ module.exports.addMember = function (req, res) {
             password: user.password
         }
         User.create(newUser,
-            function (err, user) {
+            function (err, newUser) {
                 if (err) {
                     if ((err.name && err.name == "UserExistsError") || (err.code && err.code == 11000)) {
                         return responses.errorMsg(res, 409, "Conflict", "user already exists.", null);
@@ -860,15 +932,17 @@ module.exports.addMember = function (req, res) {
                     }
                 }
 
+                addMemberToList(user._id, newUser._id);
+
                 // create a token
                 var token = jwt.sign({
-                    id: user._id
+                    id: newUser._id
                 }, config.secret, {
                         expiresIn: 86400 // expires in 24 hours
                     });
 
                 Verification.create({
-                    userID: user._id,
+                    userID: newUser._id,
                     key: token
                 },
                     function (err, verification) {
@@ -889,3 +963,4 @@ module.exports.addMember = function (req, res) {
             });
     });
 };
+

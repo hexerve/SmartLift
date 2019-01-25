@@ -68,7 +68,11 @@ module.exports = function (app) {
 
     app.put("/user", VerifyToken, User.updatePersonalInfo);
 
-    app.post("/user/addMember", VerifyToken, User.addMember);
+    app.get("/user/member", VerifyToken, User.viewMember);
+
+    app.post("/user/member", VerifyToken, User.addMember);
+
+    app.delete("/user/member", VerifyToken, User.removeMember);
 
     app.get("/adminAcesss/user/:info/:value", VerifyToken, User.getUserData);
 
