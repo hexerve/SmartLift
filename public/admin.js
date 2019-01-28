@@ -334,7 +334,11 @@ $(function () {
     });
 
     $(document).on('click', '#search-btn', function () {
-        let email = $('#email').val();
+        let email = $('#email_search').val();
+        if(err.search.email){
+            alert("please enter a valid email");
+            return;
+        }
         $.get("../adminAcesss/user/email/" + email, {},
             function (data, status, xhr) {
                 console.log(data);
@@ -387,7 +391,11 @@ $(function () {
     });
 
     $(document).on('click', '#search-btn-mob', function () {
-        let mobile = $('#mob').val();
+        if(err.search.mobile){
+            alert("please enter a valid mobile");
+            return;
+        }
+        let mobile = $('#mobile_search').val();
         $.get("../adminAcesss/user/mobile/" + mobile, {},
             function (data, status, xhr) {
                 console.log(data);
@@ -480,73 +488,20 @@ $(function () {
 
 
     $(document).on('click', '#create-btn', function () {
-        let data = {};
-        data.email = $('#email2').val();
-        data.name = $('#name2').val();
-        data.mobile = $('#mobile2').val();
-        data.password = $('#pass2').val();
-        data.isAdmin = $('#isadmin2').val();
-        data.address = {
-            flat: $('#flat2').val(),
-            floor: $('#floor2').val(),
-            building: $('#building2').val()
-        };
+        let data = getFormData($('#admin_register'));
 
-        if (data.days <= 0) {
-            $('.alert').hide(500);
-            $('#register-msg').append(
-                '<div class="alert alert-danger alert-dismissible fade show">' +
-                '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                '<strong>Oops! </strong> Plan end must be atleast of 1 day' +
-                '</div>'
-            );
+        let isErr = Object.values(err.register);
+        let isValid = true;
+        isErr.forEach(element => {
+            if(element){
+                isValid = false;
+            }
+        });
+
+        if(!isValid){
+            alert("please correctly fill all the credentials");
             return;
         }
-
-        if (!isText(data.name)) {
-            $('.alert').hide(500);
-            $('#register-msg').append(
-                '<div class="alert alert-danger alert-dismissible fade show">' +
-                '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                '<strong>Oops! </strong> Invalid name(must be greater than 3 characters)' +
-                '</div>'
-            );
-            return;
-        }
-
-        if (!isEmail(data.email)) {
-            $('.alert').hide(500);
-            $('#register-msg').append(
-                '<div class="alert alert-danger alert-dismissible fade show">' +
-                '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                '<strong>Oops! </strong> Invalid email.' +
-                '</div>'
-            );
-            return;
-        }
-
-        if (!isMobile(data.mobile)) {
-            $('.alert').hide(500);
-            $('#register-msg').append(
-                '<div class="alert alert-danger alert-dismissible fade show">' +
-                '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                '<strong>Oops! </strong> Invalid mobile.' +
-                '</div>'
-            );
-            return;
-        }
-
-        if (!isPass(data.password)) {
-            $('.alert').hide(500);
-            $('#register-msg').append(
-                '<div class="alert alert-danger alert-dismissible fade show">' +
-                '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                '<strong>Oops! </strong> Invalid password(password must be greater than 8 characters)' +
-                '</div>'
-            );
-            return;
-        }
-
 
         $.ajax({
             url: "../adminAcesss/register",
@@ -584,6 +539,97 @@ $(function () {
                 );
             }
         });
+    });
+
+    $('#name_register').on('keyup', function () {
+        let name = $('#name_register').val()
+        if (name.length < 3) {
+            validationDisplay(false, 'name', "register");
+        } else if (name.length > 30) {
+            validationDisplay(false, 'name', "register");
+        } else {
+            validationDisplay(true, 'name', "register");
+        }
+    });
+
+    $('#mobile_register').on('keyup', function () {
+        let mobile = $('#mobile_register').val()
+        if (isNaN(mobile)) {
+            validationDisplay(false, 'mobile', "register");
+        } else if (mobile.length < 10) {
+            validationDisplay(false, 'mobile', "register");
+        } else {
+            validationDisplay(true, 'mobile', "register");
+        }
+    });
+
+    $('#floor_register').on('keyup', function () {
+        let floor = $('#floor_register').val()
+        if (isNaN(floor)) {
+            validationDisplay(false, 'floor', "register");
+        } else {
+            validationDisplay(true, 'floor', "register");
+        }
+    });
+
+    $('#flat_register').on('keyup', function () {
+        let flat = $('#flat_register').val()
+        if (isNaN(flat)) {
+            validationDisplay(false, 'flat', "register");
+        } else {
+            validationDisplay(true, 'flat', "register");
+        }
+    });
+
+    $('#building_register').on('keyup', function () {
+        let building = $('#building_register').val()
+        if (building.length < 3) {
+            validationDisplay(false, 'building', "register");
+        } else if (building.length > 30) {
+            validationDisplay(false, 'building', "register");
+        } else {
+            validationDisplay(true, 'building', "register");
+        }
+    });
+
+    $('#email_register').on('keyup', function () {
+        let email = $('#email_register').val()
+        if (email != "" && email.lastIndexOf('.') != -1 && email.lastIndexOf('@') != -1 &&
+            email.lastIndexOf('.') - email.lastIndexOf("@") > 2) {
+            validationDisplay(true, 'email', "register");
+        } else {
+            validationDisplay(false, 'email', "register");
+        }
+    });
+
+    $('#password_register').on('keyup', function () {
+        let password = $('#password_register').val()
+        if (password.length < 8) {
+            validationDisplay(false, 'password', "register");
+        } else {
+            validationDisplay(true, 'password', "register");
+        }
+    });
+
+    $('#email_search').on('keyup', function () {
+        let email = $('#email_search').val()
+        if (email != "" && email.lastIndexOf('.') != -1 && email.lastIndexOf('@') != -1 &&
+            email.lastIndexOf('.') - email.lastIndexOf("@") > 2) {
+            validationDisplay(true, 'email', "search");
+        } else {
+            validationDisplay(false, 'email', "search");
+        }
+    });
+
+    $('#mobile_search').on('keyup', function () {
+        let mobile = $('#mobile_search').val()
+        if (isNaN(mobile)) {
+            validationDisplay(false, 'mobile', "search");
+        } else if (mobile.length < 10) {
+            validationDisplay(false, 'mobile', "search");
+        } else {
+            validationDisplay(true, 'mobile', "search");
+        }
     });
 
 });

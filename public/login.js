@@ -1,22 +1,4 @@
 var validate, signIn;
-var errRegister = { name: true, mobile: true, floor: true, flat: true, buiding: true, email: true, password: true };
-var errRegister1 = { email1: true, password1: true };
-
-function validationDisplay(status, field) {
-    if (status == true) {
-        errRegister[field] = false;
-        $('#' + field).removeClass('is-invalid');
-        $('#' + field).addClass('is-valid');
-        $('#' + field + '_label').removeClass('text-danger');
-        $('#' + field + '_label').addClass('text-success');
-    } else {
-        errRegister[field] = true;
-        $('#' + field).removeClass('is-valid');
-        $('#' + field).addClass('is-invalid');
-        $('#' + field + '_label').removeClass('text-success');
-        $('#' + field + '_label').addClass('text-danger');
-    }
-}
 
 $(function () {
     if (getCookie("token") !== "") {
@@ -24,15 +6,16 @@ $(function () {
     }
 
     validate = function () {
-        var form = $("#register");
-        var data1 = getFormData(form);
-        let count = 0;
-        for (let key in errRegister) {
-            if (errRegister[key] === false)
-                count++;
-        }
-        if (count < 7) {
-            alert("please fill all the credentials correctly");
+        let isErr = Object.values(err.register);
+        let isValid = true;
+        isErr.forEach(element => {
+            if(element){
+                isValid = false;
+            }
+        });
+
+        if(!isValid){
+            alert("please correctly fill all the credentials");
             return false;
         } else {
             return true;
@@ -41,8 +24,16 @@ $(function () {
     }
 
     signIn = function () {
-        if (errRegister1.email1 === true || errRegister1.password === true) {
-            alert("please fill all the credentials correctly");
+        let isErr = Object.values(err.login);
+        let isValid = true;
+        isErr.forEach(element => {
+            if(element){
+                isValid = false;
+            }
+        });
+
+        if(!isValid){
+            alert("please correctly fill all the credentials");
             return false;
         } else {
             $.ajax({
@@ -74,108 +65,93 @@ $(function () {
 
     }
 
-    $('#name').on('keyup', function () {
-        let name = $('#name').val()
+    $('#name_register').on('keyup', function () {
+        let name = $('#name_register').val()
         if (name.length < 3) {
-            validationDisplay(false, 'name');
+            validationDisplay(false, 'name', "register");
         } else if (name.length > 30) {
-            validationDisplay(false, 'name');
+            validationDisplay(false, 'name', "register");
         } else {
-            validationDisplay(true, 'name');
+            validationDisplay(true, 'name', "register");
         }
     });
 
-    $('#mobile').on('keyup', function () {
-        let mobile = $('#mobile').val()
+    $('#mobile_register').on('keyup', function () {
+        let mobile = $('#mobile_register').val()
         if (isNaN(mobile)) {
-            validationDisplay(false, 'mobile');
+            validationDisplay(false, 'mobile', "register");
         } else if (mobile.length < 10) {
-            validationDisplay(false, 'mobile');
+            validationDisplay(false, 'mobile', "register");
         } else {
-            validationDisplay(true, 'mobile');
+            validationDisplay(true, 'mobile', "register");
         }
     });
 
-    $('#floor').on('keyup', function () {
-        let floor = $('#floor').val()
+    $('#floor_register').on('keyup', function () {
+        let floor = $('#floor_register').val()
         if (isNaN(floor)) {
-            validationDisplay(false, 'floor');
+            validationDisplay(false, 'floor', "register");
         } else {
-            validationDisplay(true, 'floor');
+            validationDisplay(true, 'floor', "register");
         }
     });
 
-    $('#flat').on('keyup', function () {
-        let flat = $('#flat').val()
+    $('#flat_register').on('keyup', function () {
+        let flat = $('#flat_register').val()
         if (isNaN(flat)) {
-            validationDisplay(false, 'flat');
+            validationDisplay(false, 'flat', "register");
         } else {
-            validationDisplay(true, 'flat');
+            validationDisplay(true, 'flat', "register");
         }
     });
 
-    $('#building').on('keyup', function () {
-        let building = $('#building').val()
+    $('#building_register').on('keyup', function () {
+        let building = $('#building_register').val()
         if (building.length < 3) {
-            validationDisplay(false, 'building');
+            validationDisplay(false, 'building', "register");
         } else if (building.length > 30) {
-            validationDisplay(false, 'building');
+            validationDisplay(false, 'building', "register");
         } else {
-            validationDisplay(true, 'building');
+            validationDisplay(true, 'building', "register");
         }
     });
 
-    $('#email').on('keyup', function () {
-        let email = $('#email').val()
+    $('#email_register').on('keyup', function () {
+        let email = $('#email_register').val()
         if (email != "" && email.lastIndexOf('.') != -1 && email.lastIndexOf('@') != -1 &&
             email.lastIndexOf('.') - email.lastIndexOf("@") > 2) {
-            validationDisplay(true, 'email');
+            validationDisplay(true, 'email', "register");
         } else {
-            validationDisplay(false, 'email');
+            validationDisplay(false, 'email', "register");
         }
     });
 
-    $('#password').on('keyup', function () {
-        let password = $('#password').val()
+    $('#password_register').on('keyup', function () {
+        let password = $('#password_register').val()
         if (password.length < 8) {
-            validationDisplay(false, 'password');
+            validationDisplay(false, 'password', "register");
         } else {
-            validationDisplay(true, 'password');
+            validationDisplay(true, 'password', "register");
         }
     });
 
-    $('#email1').on('keyup', function () {
-        let email = $('#email1').val()
+    
+    $('#email_login').on('keyup', function () {
+        let email = $('#email_login').val()
         if (email != "" && email.lastIndexOf('.') != -1 && email.lastIndexOf('@') != -1 &&
             email.lastIndexOf('.') - email.lastIndexOf("@") > 2) {
-            errRegister1['email1'] = false;
-            $('#' + 'email1').removeClass('is-invalid');
-            $('#' + 'email1').addClass('is-valid');
-            $('#' + 'email1' + '_label').removeClass('text-danger');
-            $('#' + 'email1' + '_label').addClass('text-success');
+            validationDisplay(true, 'email', "login");
         } else {
-            errRegister1['email1'] = true;
-            $('#' + 'email1').removeClass('is-valid');
-            $('#' + 'email1').addClass('is-invalid');
-            $('#' + 'email1' + '_label').removeClass('text-success');
-            $('#' + 'email1' + '_label').addClass('text-danger');
+            validationDisplay(false, 'email', "login");
         }
     });
 
-    $('#password1').on('keyup', function () {
-        let password = $('#password1').val()
+    $('#password_login').on('keyup', function () {
+        let password = $('#password_login').val()
         if (password.length < 8) {
-            errRegister1['password1'] = true;
-            $('#' + 'password1').removeClass('is-valid');
-            $('#' + 'password1').addClass('is-invalid');
-            $('#' + 'password1' + '_label').removeClass('text-success');
-            $('#' + 'password1' + '_label').addClass('text-danger');
+            validationDisplay(false, 'password', "login");
         } else {
-            errRegister1['password1'] = false;
-            $('#' + 'password1').removeClass('is-invalid');
-            $('#' + 'password1').addClass('is-valid');
-            $('#' + 'password1' + '_label').removeClass('text-danger');
-            $('#' + 'password1' + '_label').addClass('text-success');
+            validationDisplay(true, 'password', "login");
         }
     });
 

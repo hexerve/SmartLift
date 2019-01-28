@@ -1,3 +1,9 @@
+var err = {
+    register: { name: true, mobile: true, floor: true, flat: true, building: true, email: true, password: true },
+    login: { email: true, password: true },
+    search: {email: true, mobile: true},
+}
+
 function setCookie(cname, cvalue, exdays) {
     var d = new Date();
     d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
@@ -32,33 +38,50 @@ function getFormData(form){
     return indexed_array;
 }
 
-function isEmail(email) {
-    if (email != "" && email.lastIndexOf('.') != -1 && email.lastIndexOf('@') != -1 &&
-        email.lastIndexOf('.') - email.lastIndexOf("@") > 2) {
-        return true;
-    }
-    return false;
-}
+// function isEmail(email) {
+//     if (email != "" && email.lastIndexOf('.') != -1 && email.lastIndexOf('@') != -1 &&
+//         email.lastIndexOf('.') - email.lastIndexOf("@") > 2) {
+//         return true;
+//     }
+//     return false;
+// }
 
-function isMobile(mobile) {
-    if (isNaN(mobile) || mobile.length < 5) {
-        return false;
-    }
-    return true;
-}
+// function isMobile(mobile) {
+//     if (isNaN(mobile) || mobile.length < 5) {
+//         return false;
+//     }
+//     return true;
+// }
 
-function isText(text) {
-    if (text.length > 2) {
-        return true;
-    }
-    return false;
-}
+// function isText(text) {
+//     if (text.length > 2) {
+//         return true;
+//     }
+//     return false;
+// }
 
-function isPass(pass) {
-    if (pass.length < 8) {
-        return false;
+// function isPass(pass) {
+//     if (pass.length < 8) {
+//         return false;
+//     }
+//     return true;
+// }
+
+
+function validationDisplay(status, field, form) {
+    if (status == true) {
+        err[form][field] = false;
+        $('#' + field + '_' + form).removeClass('is-invalid');
+        $('#' + field + '_' + form).addClass('is-valid');
+        $('#' + field + '_' + form + '_label').removeClass('text-danger');
+        $('#' + field + '_' + form + '_label').addClass('text-success');
+    } else {
+        err[form][field] = true;
+        $('#' + field + '_' + form).removeClass('is-valid');
+        $('#' + field + '_' + form).addClass('is-invalid');
+        $('#' + field + '_' + form + '_label').removeClass('text-success');
+        $('#' + field + '_' + form + '_label').addClass('text-danger');
     }
-    return true;
 }
 
 $(function () {

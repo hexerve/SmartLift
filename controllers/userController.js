@@ -46,18 +46,10 @@ module.exports.register = function (req, res) {
         });
 
         var hashedPassword = bcrypt.hashSync(fields.password, 8);
-
+        console.log(fields)
         fields.password = hashedPassword;
         fields.isAdmin = false;
         fields.rentAgreement = newpath;
-        fields.address = {
-            floor: fields.floor,
-            flat: fields.flat,
-            building: fields.building
-        }
-        fields.floor = undefined;
-        fields.flat = undefined;
-        fields.building = undefined;
 
         User.create(fields,
             function (err, user) {
@@ -118,7 +110,7 @@ module.exports.register = function (req, res) {
 
 module.exports.login = function (req, res) {
     User.findOne({
-        email: req.body.email1
+        email: req.body.email
     }, function (err, user) {
 
         if (err) {
@@ -130,7 +122,7 @@ module.exports.login = function (req, res) {
             return responses.errorMsg(res, 404, "Not Found", "user not found", null);
         }
 
-        var passwordIsValid = bcrypt.compareSync(req.body.password1, user.password);
+        var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
 
         if (!passwordIsValid) {
             errors = {

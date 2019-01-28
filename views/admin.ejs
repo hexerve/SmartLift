@@ -27,12 +27,12 @@
                 <div class="col-md-6">
                     <div id="search-msg"></div>
                     <form>
-                        <div class="input-group mb-3 input-group-lg container">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Email</span>
+                        <div class="form-group row">
+                            <label for="email_search" id="email_search_label" class="col-sm-2 col-form-label">Email</label>
+                            <div class="col-sm-7">
+                                <input type="email" class="form-control" name="email" id="email_search" placeholder="Email">
                             </div>
-                            <input type="text" class="form-control" name="email" id="email" placeholder="example@gmail.com">
-                        </div>
+                        </div>        
                         <div class="wrapper text-center">
                             <div class="btn-group btn-group-lg">
                                 <button type="button" id="search-btn" class="btn wobble-vertical">Search</button>
@@ -40,11 +40,11 @@
                         </div>
                     </form>
                     <form class="pt-5 pb-5">
-                        <div class="input-group mb-3 input-group-lg container">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Mobile</span>
+                        <div class="form-group row">
+                            <label for="mobile_search" id="mobile_search_label" class="col-sm-2 col-form-label">Mobile</label>
+                            <div class="col-sm-7">
+                                <input type="number" class="form-control" name="mobile" id="mobile_search" placeholder="mobile" minlength="10">
                             </div>
-                            <input type="text" class="form-control" name="mob" id="mob" placeholder="9999999999">
                         </div>
                         <div class="wrapper text-center">
                             <div class="btn-group btn-group-lg">
@@ -128,64 +128,73 @@
 
                 <div class="col-md-6 create-users pb-5">
                     <div id="register-msg"></div>
-                    <form>
-                        <div class="input-group mb-3 input-group-lg container">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Email</span>
+                    <form name="admin_register" id="admin_register">
+                        <div class="form-group row">
+                            <label for="email_register" id="email_register_label" class="col-sm-2 col-form-label">Email</label>
+                            <div class="col-sm-7">
+                                <input type="email" class="form-control" name="email" id="email_register" placeholder="Email">
                             </div>
-                            <input type="text" class="form-control" name="email" id="email2" placeholder="example@gmail.com">
                         </div>
-                        <div class="input-group mb-3 input-group-lg container">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Name</span>
+            
+                        <div class="form-group row">
+                            <label for="password_register" id="password_register_label" class="col-sm-2 col-form-label">Password</label>
+                            <div class="col-sm-7">
+                                <input type="password" class="form-control" name="password" id="password_register" placeholder="Password">
                             </div>
-                            <input type="text" class="form-control" name="name" id="name2" placeholder="name">
                         </div>
-                        <div class="input-group mb-3 input-group-lg container">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Mobile</span>
+        
+                        <div class="form-group row">
+                            <label for="name_register" id="name_register_label" class="col-sm-2 col-form-label">Name</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" name="name" id="name_register" placeholder="name" minlength="3"
+                                    maxlength="30">
                             </div>
-                            <input type="text" class="form-control" name="mobile" id="mobile2" placeholder="+1 800 274 0561">
                         </div>
-                        <div class="input-group mb-3 input-group-lg container">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Password</span>
+                        <div class="form-group row">
+                            <label for="mobile_register" id="mobile_register_label" class="col-sm-2 col-form-label">Mobile</label>
+                            <div class="col-sm-7">
+                                <input type="number" class="form-control" name="mobile" id="mobile_register" placeholder="mobile" minlength="10">
                             </div>
-                            <input type="password" class="form-control" name="pass" id="pass2" placeholder="password">
                         </div>
-                        <div class="input-group mb-3 input-group-lg container">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Flat</span>
+                        <div class="form-group row">
+                            <label for="floor_register" id="floor_register_label" class="col-sm-2 col-form-label">Floor</label>
+                            <div class="col-sm-7">
+                                <input type="number" class="form-control" name="address.floor" id="floor_register" placeholder="floor">
                             </div>
-                            <input type="text" class="form-control" name="flat2" id="flat2" placeholder="flat">
                         </div>
-                        <div class="input-group mb-3 input-group-lg container">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Floor</span>
+                        <div class="form-group row">
+                            <label for="flat_register" id="flat_register_label" class="col-sm-2 col-form-label">Flat</label>
+                            <div class="col-sm-7">
+                                <input type="number" class="form-control" name="address.flat" id="flat_register" placeholder="flat">
                             </div>
-                            <input type="text" class="form-control" name="floor2" id="floor2" placeholder="floor">
                         </div>
-                        <div class="input-group mb-3 input-group-lg container">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Building</span>
+                        <div class="form-group row">
+                            <label for="building_register" id="building_register_label" class="col-sm-2 col-form-label">Building</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" name="address.building" id="building_register" placeholder="building">
                             </div>
-                            <input type="text" class="form-control" name="building2" id="building2" placeholder="building">
-                        </div>  
-                        <div class="input-group mb-3 input-group-lg container">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Make Admin</span>
-                            </div>
-                            <select class="form-control" id="isadmin2">
-                                <option value="true">Yes</option>
-                                <option value="false">No</option>
-                            </select>
                         </div>
+                        
+                        <div class="form-group row">
+                            <label for="isadmin_register" id="isadmin_register_label" class="col-sm-2 col-form-label text-success">Make admin</label>
+                            <div class="col-sm-7">
+                                <select class="form-control" id="isadmin_register" class="form-control is-valid">
+                                    <option value="true">Yes</option>
+                                    <option value="false">No</option>
+                                </select>
+                            </div>
+                        </div>
+
                         <div class="wrapper text-center">
                             <div class="btn-group btn-group-lg">
                                 <button type="button" id="create-btn" class="btn wobble-vertical">Create</button>
                                 <!-- <button type="button" id="update" class="btn wobble-vertical">Update</button> -->
                             </div>
                         </div>
+
+            
+                        <input type="submit">
+            
                     </form>
 
                 </div>
