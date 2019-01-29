@@ -3,7 +3,8 @@ var err = {
     login: { email: true, password: true },
     search: {email: true, mobile: true},
     update: {name: true, mobile: true},
-    member: {email: true, name: true, mobile: true}
+    member: {email: true, name: true, mobile: true},
+    reverify: {email: true}
 }
 
 function setCookie(cname, cvalue, exdays) {

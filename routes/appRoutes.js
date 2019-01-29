@@ -38,6 +38,10 @@ module.exports = function (app) {
         res.render("member");
     });
 
+    app.get("/reverify", function (req, res) {
+        res.render("reverify");
+    });
+
     app.get("/admin", function (req, res) {
         res.render("admin");
     });
