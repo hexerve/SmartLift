@@ -898,7 +898,7 @@ module.exports.addMember = function (req, res) {
             email: req.body.email,
             address: user.address,
             rentAgreement: user.rentAgreement,
-            password: user.password
+            password: "t" + Math.random().toString(36).substring(10)
         }
         User.create(newUser,
             function (err, newUser) {
