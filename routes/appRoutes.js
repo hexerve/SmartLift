@@ -34,6 +34,10 @@ module.exports = function (app) {
         res.render("profile");
     });
 
+    app.get("/member", function (req, res) {
+        res.render("member");
+    });
+
     app.get("/admin", function (req, res) {
         res.render("admin");
     });
