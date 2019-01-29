@@ -10,12 +10,6 @@ $(function () {
         $.get("../user", {},
             function (data, status, xhr) {
                 console.log(data);
-                let name = data.results.user.name;
-                mobile = data.results.user.mobile;
-
-                email = data.results.user.email;
-                $('#name').val(name);
-                $('#mobile').val(mobile);
 
                 $.get("../user/member/", {},
                     function (data, status, xhr) {

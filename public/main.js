@@ -4,7 +4,8 @@ var err = {
     search: {email: true, mobile: true},
     update: {name: true, mobile: true},
     member: {email: true, name: true, mobile: true},
-    reverify: {email: true}
+    reverify: {email: true},
+    forgetPass: {email: true}
 }
 
 function setCookie(cname, cvalue, exdays) {
@@ -40,36 +41,6 @@ function getFormData(form){
 
     return indexed_array;
 }
-
-// function isEmail(email) {
-//     if (email != "" && email.lastIndexOf('.') != -1 && email.lastIndexOf('@') != -1 &&
-//         email.lastIndexOf('.') - email.lastIndexOf("@") > 2) {
-//         return true;
-//     }
-//     return false;
-// }
-
-// function isMobile(mobile) {
-//     if (isNaN(mobile) || mobile.length < 5) {
-//         return false;
-//     }
-//     return true;
-// }
-
-// function isText(text) {
-//     if (text.length > 2) {
-//         return true;
-//     }
-//     return false;
-// }
-
-// function isPass(pass) {
-//     if (pass.length < 8) {
-//         return false;
-//     }
-//     return true;
-// }
-
 
 function validationDisplay(status, field, form) {
     if (status == true) {

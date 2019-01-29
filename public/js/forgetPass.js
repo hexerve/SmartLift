@@ -1,14 +1,15 @@
-$(function () {
-    if (getCookie("token") === "") {
+if (getCookie("token") === "") {
         
-    } else {
-        window.location.href = "/";
-    }
-    
-    $(document).on('click', '#reverify-btn', function () {
-        let data = getFormData($('#reverify_form'));
+} else {
+    window.location.href = "/";
+}
 
-        let isErr = Object.values(err.reverify);
+$(function () {
+
+    $(document).on('click', '#forgetPass-btn', function () {
+        let data = getFormData($('#forgetPass_form'));
+
+        let isErr = Object.values(err.forgetPass);
         let isValid = true;
         isErr.forEach(element => {
             if (element) {
@@ -22,8 +23,8 @@ $(function () {
         }
 
         $.ajax({
-            url: "../reverify",
-            type: 'POST',
+            url: "../password/forget",
+            type: 'PUT',
             data: JSON.stringify(data),
             contentType: 'application/json',
             success: function (result) {
@@ -47,13 +48,13 @@ $(function () {
         });
     });
 
-    $('#email_reverify').on('keyup', function () {
-        let email = $('#email_reverify').val()
+    $('#email_forgetPass').on('keyup', function () {
+        let email = $('#email_forgetPass').val()
         if (email != "" && email.lastIndexOf('.') != -1 && email.lastIndexOf('@') != -1 &&
             email.lastIndexOf('.') - email.lastIndexOf("@") > 2) {
-            validationDisplay(true, 'email', "reverify");
+            validationDisplay(true, 'email', "forgetPass");
         } else {
-            validationDisplay(false, 'email', "reverify");
+            validationDisplay(false, 'email', "forgetPass");
         }
     });
 
