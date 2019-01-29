@@ -97,24 +97,13 @@ $(function () {
                         }
                     }).fail(function (xhr, status, error) {
                         if (xhr.status === 0) {
-                            $('.alert').hide(500);
-                            $('#search-msg').append(
-                                '<div class="alert alert-danger alert-dismissible fade show">' +
-                                '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                                '<strong>Oops! </strong>Network error.</div>'
-                            );
+                            alert("Network error");
                             return;
                         }
                     });
             }).fail(function (xhr, status, error) {
                 if (xhr.status === 0) {
-                    $('.alert').hide(500);
-                    // $('#pass-msg').append(
-                    //     '<div class="alert alert-danger alert-dismissible fade show">' +
-                    //     '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                    //     '<strong>Oops! </strong>Network error.</div>'
-                    // );
-                    alert("no network access");
+                    alert("Network error");
                     return;
                 }
 
@@ -191,12 +180,7 @@ $(function () {
     //         }
     //     }).fail(function (xhr, status, error) {
     //         if (xhr.status === 0) {
-    //             // $('#search-msg').append(
-    //             //     '<div class="alert alert-danger alert-dismissible fade show">' +
-    //             //     '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-    //             //     '<strong>Oops! </strong>Network error.</div>'
-    //             // );
-    //             alert("network error");
+    //             alert("Network error");
     //             return;
     //         }
     //     });
@@ -214,14 +198,7 @@ $(function () {
             data: JSON.stringify(data),
             contentType: 'application/json',
             success: function (result) {
-                // $('.alert').hide(500);
-                // $('#list-msg').append(
-                //     '<div class="alert alert-success alert-dismissible fade show">' +
-                //     '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                //     '<strong>Congratulations! </strong> User has been succesfully updated.' +
-                //     '</div>'
-                // );
-                alert("success");
+                alert("Success");
                 $('#card_' + data.id).hide('slow', function () { $target.remove(); });
             },
             error: function (xhr, textStatus, errorThrown) {
@@ -237,13 +214,6 @@ $(function () {
                     }
                 }
 
-                // $('.alert').hide(500);
-                // $('#list-msg').append(
-                //     '<div class="alert alert-danger alert-dismissible fade show">' +
-                //     '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                //     '<strong>Oops! </strong> ' + errMsg +
-                //     '</div>'
-                // );
                 alert(errMsg);
             }
         });
@@ -257,23 +227,13 @@ $(function () {
                 alert("revoked successfully");
             }).fail(function (xhr, status, error) {
                 if (xhr.status === 0) {
-                    $('.alert').hide(500);
-                    $('#search-msg').append(
-                        '<div class="alert alert-danger alert-dismissible fade show">' +
-                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                        '<strong>Oops! </strong>Network error.</div>'
-                    );
+                    alert("Network error");
                     return;
                 } else {
                     errMsg = JSON.parse(xhr.responseText).message;
                     errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
 
-                    $('.alert').hide(500);
-                    $('#search-msg').append(
-                        '<div class="alert alert-danger alert-dismissible fade show">' +
-                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                        '<strong>Oops! </strong>' + errMsg + '</div>'
-                    );
+                    alert(errMsg);
                 }
 
                 console.log(xhr);
@@ -299,23 +259,13 @@ $(function () {
                 alert("status updated!");
             }).fail(function (xhr, status, error) {
                 if (xhr.status === 0) {
-                    $('.alert').hide(500);
-                    $('#search-msg').append(
-                        '<div class="alert alert-danger alert-dismissible fade show">' +
-                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                        '<strong>Oops! </strong>Network error.</div>'
-                    );
+                    alert("Network error");
                     return;
                 } else {
                     errMsg = JSON.parse(xhr.responseText).message;
                     errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
 
-                    $('.alert').hide(500);
-                    $('#search-msg').append(
-                        '<div class="alert alert-danger alert-dismissible fade show">' +
-                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                        '<strong>Oops! </strong>' + errMsg + '</div>'
-                    );
+                    alert(errMsg);
                 }
 
                 console.log(xhr);
@@ -367,24 +317,13 @@ $(function () {
 
             }).fail(function (xhr, status, error) {
                 if (xhr.status === 0) {
-                    $('.alert').hide(500);
-                    $('#search-msg').append(
-                        '<div class="alert alert-danger alert-dismissible fade show">' +
-                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                        '<strong>Oops! </strong>Network error.</div>'
-                    );
+                    alert("Network error");
                     return;
                 } else {
                     errMsg = JSON.parse(xhr.responseText).message;
                     errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
 
-                    $('.alert').hide(500);
-                    $('#search-msg').append(
-                        '<div class="alert alert-danger alert-dismissible fade show">' +
-                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                        '<strong>Oops! </strong>' + errMsg + '</div>'
-                    );
-                }
+alert(errMsg);                }
 
                 console.log(xhr);
             });
@@ -413,24 +352,13 @@ $(function () {
 
             }).fail(function (xhr, status, error) {
                 if (xhr.status === 0) {
-                    $('.alert').hide(500);
-                    $('#search-msg').append(
-                        '<div class="alert alert-danger alert-dismissible fade show">' +
-                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                        '<strong>Oops! </strong>Network error.</div>'
-                    );
+                    alert("Network error");
                     return;
                 } else {
                     errMsg = JSON.parse(xhr.responseText).message;
                     errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
 
-                    $('.alert').hide(500);
-                    $('#search-msg').append(
-                        '<div class="alert alert-danger alert-dismissible fade show">' +
-                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                        '<strong>Oops! </strong>' + errMsg + '</div>'
-                    );
-                }
+alert(errMsg);                }
 
                 console.log(xhr);
             });
@@ -454,13 +382,7 @@ $(function () {
             data: JSON.stringify(data),
             contentType: 'application/json',
             success: function (result) {
-                $('.alert').hide(500);
-                $('#list-msg').append(
-                    '<div class="alert alert-success alert-dismissible fade show">' +
-                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                    '<strong>Congratulations! </strong> User has been succesfully updated.' +
-                    '</div>'
-                );
+                alert("Success");
             },
             error: function (xhr, textStatus, errorThrown) {
                 var errMsg;
@@ -475,13 +397,7 @@ $(function () {
                     }
                 }
 
-                $('.alert').hide(500);
-                $('#list-msg').append(
-                    '<div class="alert alert-danger alert-dismissible fade show">' +
-                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                    '<strong>Oops! </strong> ' + errMsg +
-                    '</div>'
-                );
+                alert(errMsg);
             }
         });
     });
@@ -509,13 +425,7 @@ $(function () {
             data: JSON.stringify(data),
             contentType: 'application/json',
             success: function (result) {
-                $('.alert').hide(500);
-                $('#register-msg').append(
-                    '<div class="alert alert-success alert-dismissible fade show">' +
-                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                    '<strong>Congratulations! </strong> User has been succesfully created.' +
-                    '</div>'
-                );
+                alert("Success");
             },
             error: function (xhr, textStatus, errorThrown) {
                 var errMsg;
@@ -530,13 +440,7 @@ $(function () {
                     }
                 }
 
-                $('.alert').hide(500);
-                $('#register-msg').append(
-                    '<div class="alert alert-danger alert-dismissible fade show">' +
-                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                    '<strong>Oops! </strong> ' + errMsg +
-                    '</div>'
-                );
+                alert(errMsg);
             }
         });
     });

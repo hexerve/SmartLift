@@ -19,12 +19,7 @@ $(function () {
 
             }).fail(function (xhr, status, error) {
                 if (xhr.status === 0) {
-                    $('.alert').hide(500);
-                    $('#pass-msg').append(
-                        '<div class="alert alert-danger alert-dismissible fade show">' +
-                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                        '<strong>Oops! </strong>Network error.</div>'
-                    );
+                    alert("network error");
                     return;
                 }
 
@@ -55,13 +50,7 @@ $(function () {
             data: JSON.stringify(data),
             contentType: 'application/json',
             success: function (result) {
-                $('.alert').hide(500);
-                $('#list-msg').append(
-                    '<div class="alert alert-success alert-dismissible fade show">' +
-                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                    '<strong>Congratulations! </strong> Your profile has been succesfully updated.' +
-                    '</div>'
-                );
+                alert("Profile successfully updated");
             },
             error: function (xhr, textStatus, errorThrown) {
                 var errMsg;
@@ -76,13 +65,7 @@ $(function () {
                     }
                 }
 
-                $('.alert').hide(500);
-                $('#list-msg').append(
-                    '<div class="alert alert-danger alert-dismissible fade show">' +
-                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                    '<strong>Oops! </strong> ' + errMsg +
-                    '</div>'
-                );
+                alert(errMsg);
             }
         });
     });

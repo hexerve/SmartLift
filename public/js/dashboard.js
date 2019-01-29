@@ -26,13 +26,7 @@ $(function () {
                 // currentUserID = data.results.user._id;
             }).fail(function (xhr, status, error) {
             if (xhr.status === 0) {
-                $('.alert').hide(500);
-                // $('#pass-msg').append(
-                //     '<div class="alert alert-danger alert-dismissible fade show">' +
-                //     '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                //     '<strong>Oops! </strong>Network error.</div>'
-                // );
-                alert("no network access");
+                alert("Network error");
                 return;
             }
 
