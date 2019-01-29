@@ -2,6 +2,8 @@ var err = {
     register: { name: true, mobile: true, floor: true, flat: true, building: true, email: true, password: true },
     login: { email: true, password: true },
     search: {email: true, mobile: true},
+    update: {name: true, mobile: true},
+    member: {email: true, name: true, mobile: true}
 }
 
 function setCookie(cname, cvalue, exdays) {

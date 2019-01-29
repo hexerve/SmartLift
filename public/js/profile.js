@@ -16,7 +16,7 @@ $(function () {
                 email = data.results.user.email;
                 $('#name').val(name);
                 $('#mobile').val(mobile);
-            
+
                 $.get("../user/member/", {},
                     function (data, status, xhr) {
                         console.log(data);
@@ -29,7 +29,7 @@ $(function () {
 
                             for (let i = 0; i < users.length; i++) {
                                 let proof = '', proofLink = '';
-                                
+
                                 if (users[i].rentAgreement) {
                                     let rentAgreement = users[i].rentAgreement.split('.');
 
@@ -99,140 +99,128 @@ $(function () {
                         }
                     });
             }).fail(function (xhr, status, error) {
-            if (xhr.status === 0) {
-                $('.alert').hide(500);
-                $('#pass-msg').append(
-                    '<div class="alert alert-danger alert-dismissible fade show">' +
-                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                    '<strong>Oops! </strong>Network error.</div>'
-                );
-                return;
-            }
+                if (xhr.status === 0) {
+                    $('.alert').hide(500);
+                    $('#pass-msg').append(
+                        '<div class="alert alert-danger alert-dismissible fade show">' +
+                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                        '<strong>Oops! </strong>Network error.</div>'
+                    );
+                    return;
+                }
 
-            setCookie("token", "", -1);
-            window.location.href = "/login?action=login_required";
-        });
+                setCookie("token", "", -1);
+                window.location.href = "/login?action=login_required";
+            });
     }
 
     $(document).on('click', '#update-btn', function () {
-        let name = $('#name').val();
-        let mob = $('#mobile').val();
+        let data = getFormData($('#update_form'));
 
-        if (isText(name) && isMobile(mob)) {
-            let data = {};
-            data.name = name;
-            data.mobile = mob;
-            $.ajax({
-                url: "../user",
-                type: 'PUT',
-                data: JSON.stringify(data),
-                contentType: 'application/json',
-                success: function (result) {
-                    $('.alert').hide(500);
-                    $('#list-msg').append(
-                        '<div class="alert alert-success alert-dismissible fade show">' +
-                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                        '<strong>Congratulations! </strong> Your profile has been succesfully updated.' +
-                        '</div>'
-                    );
-                },
-                error: function (xhr, textStatus, errorThrown) {
-                    var errMsg;
-                    if (xhr.status === 0) {
-                        errMsg = "Network error.";
-                    } else {
-                        errMsg = JSON.parse(xhr.responseText).message;
-                        errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
+        let isErr = Object.values(err.update);
+        let isValid = true;
+        isErr.forEach(element => {
+            if (element) {
+                isValid = false;
+            }
+        });
 
-                        if (errMsg === 'Validation failed.') {
-                            errMsg += '<br/>Incorrect ' + JSON.parse(xhr.responseText).errors.index.join(", ");
-                        }
-                    }
-
-                    $('.alert').hide(500);
-                    $('#list-msg').append(
-                        '<div class="alert alert-danger alert-dismissible fade show">' +
-                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                        '<strong>Oops! </strong> ' + errMsg +
-                        '</div>'
-                    );
-                }
-            });
-        } else if (!isText(name)) {
-            $('.alert').hide(500);
-            $('#list-msg').append(
-                '<div class="alert alert-danger alert-dismissible fade show">' +
-                '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                '<strong>Oops! </strong>Invalid name' +
-                '</div>'
-            );
-        } else {
-            $('.alert').hide(500);
-            $('#list-msg').append(
-                '<div class="alert alert-danger alert-dismissible fade show">' +
-                '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                '<strong>Oops! </strong> Invalid Mobile number' +
-                '</div>'
-            );
+        if (!isValid) {
+            alert("please correctly fill all the credentials");
+            return;
         }
+
+        $.ajax({
+            url: "../user",
+            type: 'PUT',
+            data: JSON.stringify(data),
+            contentType: 'application/json',
+            success: function (result) {
+                $('.alert').hide(500);
+                $('#list-msg').append(
+                    '<div class="alert alert-success alert-dismissible fade show">' +
+                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                    '<strong>Congratulations! </strong> Your profile has been succesfully updated.' +
+                    '</div>'
+                );
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                var errMsg;
+                if (xhr.status === 0) {
+                    errMsg = "Network error.";
+                } else {
+                    errMsg = JSON.parse(xhr.responseText).message;
+                    errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
+
+                    if (errMsg === 'Validation failed.') {
+                        errMsg += '<br/>Incorrect ' + JSON.parse(xhr.responseText).errors.index.join(", ");
+                    }
+                }
+
+                $('.alert').hide(500);
+                $('#list-msg').append(
+                    '<div class="alert alert-danger alert-dismissible fade show">' +
+                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                    '<strong>Oops! </strong> ' + errMsg +
+                    '</div>'
+                );
+            }
+        });
     });
 
 
     $(document).on('click', '#add-btn', function () {
-        let email = $('#email').val();
-        let mobile = $('#mobile1').val();
-        let name = $('#name1').val();
-        
-        if (isEmail(email) && isMobile(mobile) && isText(name)) {
-            let data = {};
-            data.email = email;
-            data.name = name;
-            data.mobile = mobile;
-            $.ajax({
-                url: "../user/member",
-                type: 'POST',
-                data: JSON.stringify(data),
-                contentType: 'application/json',
-                success: function (result) {
-                    $('.alert').hide(500);
-                    $('#list-msg').append(
-                        '<div class="alert alert-success alert-dismissible fade show">' +
-                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                        '<strong>Congratulations! </strong> User succesfully added.' +
-                        '</div>'
-                    );
-                },
-                error: function (xhr, textStatus, errorThrown) {
-                    var errMsg;
-                    if (xhr.status === 0) {
-                        errMsg = "Network error.";
-                    } else {
-                        errMsg = JSON.parse(xhr.responseText).message;
-                        errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
+        let data = getFormData($('#create_member'));
 
-                        if (errMsg === 'Validation failed.') {
-                            errMsg += '<br/>Incorrect ' + JSON.parse(xhr.responseText).errors.index.join(", ");
-                        }
-                    }
+        let isErr = Object.values(err.member);
+        let isValid = true;
+        isErr.forEach(element => {
+            if (element) {
+                isValid = false;
+            }
+        });
 
-                    $('.alert').hide(500);
-                    $('#list-msg').append(
-                        '<div class="alert alert-danger alert-dismissible fade show">' +
-                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                        '<strong>Oops! </strong> ' + errMsg +
-                        '</div>'
-                    );
-                }
-            });
-        } else  {
-            $('.alert').hide(500);
-            $('#list-msg').append(
-                '<div class="alert alert-danger alert-dismissible fade show">' +
-                '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                '<strong>Oops! </strong>Please fill correct credentials' +
-                '</div>'
-            );
+        if (!isValid) {
+            alert("please correctly fill all the credentials");
+            return;
         }
+
+        $.ajax({
+            url: "../user/member",
+            type: 'POST',
+            data: JSON.stringify(data),
+            contentType: 'application/json',
+            success: function (result) {
+                $('.alert').hide(500);
+                $('#list-msg').append(
+                    '<div class="alert alert-success alert-dismissible fade show">' +
+                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                    '<strong>Congratulations! </strong> User succesfully added.' +
+                    '</div>'
+                );
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                var errMsg;
+                if (xhr.status === 0) {
+                    errMsg = "Network error.";
+                } else {
+                    errMsg = JSON.parse(xhr.responseText).message;
+                    errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
+
+                    if (errMsg === 'Validation failed.') {
+                        errMsg += '<br/>Incorrect ' + JSON.parse(xhr.responseText).errors.index.join(", ");
+                    }
+                }
+
+                $('.alert').hide(500);
+                $('#list-msg').append(
+                    '<div class="alert alert-danger alert-dismissible fade show">' +
+                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                    '<strong>Oops! </strong> ' + errMsg +
+                    '</div>'
+                );
+            }
+        });
     });
 
     $(document).on('click', '.remove', function (e) {
@@ -281,6 +269,60 @@ $(function () {
                 alert(errMsg);
             }
         });
+    });
+
+    $('#name_update').on('keyup', function () {
+        let name = $('#name_update').val()
+        if (name.length < 3) {
+            validationDisplay(false, 'name', "update");
+        } else if (name.length > 30) {
+            validationDisplay(false, 'name', "update");
+        } else {
+            validationDisplay(true, 'name', "update");
+        }
+    });
+
+    $('#mobile_update').on('keyup', function () {
+        let mobile = $('#mobile_update').val()
+        if (isNaN(mobile)) {
+            validationDisplay(false, 'mobile', "update");
+        } else if (mobile.length < 10) {
+            validationDisplay(false, 'mobile', "update");
+        } else {
+            validationDisplay(true, 'mobile', "update");
+        }
+    });
+
+    $('#email_member').on('keyup', function () {
+        let email = $('#email_member').val()
+        if (email != "" && email.lastIndexOf('.') != -1 && email.lastIndexOf('@') != -1 &&
+            email.lastIndexOf('.') - email.lastIndexOf("@") > 2) {
+            validationDisplay(true, 'email', "member");
+        } else {
+            validationDisplay(false, 'email', "member");
+        }
+    });
+
+    $('#name_member').on('keyup', function () {
+        let name = $('#name_member').val()
+        if (name.length < 3) {
+            validationDisplay(false, 'name', "member");
+        } else if (name.length > 30) {
+            validationDisplay(false, 'name', "member");
+        } else {
+            validationDisplay(true, 'name', "member");
+        }
+    });
+
+    $('#mobile_member').on('keyup', function () {
+        let mobile = $('#mobile_member').val()
+        if (isNaN(mobile)) {
+            validationDisplay(false, 'mobile', "member");
+        } else if (mobile.length < 10) {
+            validationDisplay(false, 'mobile', "member");
+        } else {
+            validationDisplay(true, 'mobile', "member");
+        }
     });
 
 });

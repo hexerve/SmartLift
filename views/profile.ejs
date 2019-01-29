@@ -30,18 +30,20 @@
 
             <div class="col-md-6">
                 <div id="list-msg"></div>
-                <form>
-                    <div class="input-group mb-3 input-group-lg container">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Name</span>
+                <form name="update" id="update_form">
+                    <div class="form-group row">
+                        <label for="name_update" id="name_update_label" class="col-sm-2 col-form-label">Name</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" name="name" id="name_update" placeholder="name"
+                                minlength="3" maxlength="30">
                         </div>
-                        <input type="text" class="form-control" name="name" id="name" placeholder="name">
                     </div>
-                    <div class="input-group mb-3 input-group-lg container">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Mobile</span>
+                    <div class="form-group row">
+                        <label for="mobile_update" id="mobile_update_label" class="col-sm-2 col-form-label">Mobile</label>
+                        <div class="col-sm-7">
+                            <input type="number" class="form-control" name="mobile" id="mobile_update" placeholder="mobile"
+                                minlength="10">
                         </div>
-                        <input type="number" class="form-control" name="mobile" id="mobile" placeholder="18002740561">
                     </div>
                     <div class="wrapper text-center">
                         <div class="btn-group btn-group-lg">
@@ -50,24 +52,26 @@
                     </div>
                 </form>
 
-                <form>
-                    <div class="input-group mb-3 input-group-lg container">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Email</span>
+                <form name="addMember" id="create_member">
+                    <div class="form-group row">
+                        <label for="email_member" id="email_member_label" class="col-sm-2 col-form-label">Email</label>
+                        <div class="col-sm-7">
+                            <input type="email" class="form-control" name="email" id="email_member" placeholder="Email">
                         </div>
-                        <input type="text" class="form-control" name="email" id="email" placeholder="Email">
                     </div>
-                    <div class="input-group mb-3 input-group-lg container">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Name</span>
+                    <div class="form-group row">
+                        <label for="name_member" id="name_member_label" class="col-sm-2 col-form-label">Name</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" name="name" id="name_member" placeholder="name"
+                                minlength="3" maxlength="30">
                         </div>
-                        <input type="text" class="form-control" name="name1" id="name1" placeholder="name">
                     </div>
-                    <div class="input-group mb-3 input-group-lg container">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Mobile</span>
+                    <div class="form-group row">
+                        <label for="mobile_member" id="mobile_member_label" class="col-sm-2 col-form-label">Mobile</label>
+                        <div class="col-sm-7">
+                            <input type="number" class="form-control" name="mobile" id="mobile_member" placeholder="mobile"
+                                minlength="10">
                         </div>
-                        <input type="number" class="form-control" name="mobile1" id="mobile1" placeholder="18002740561">
                     </div>
                     <div class="wrapper text-center">
                         <div class="btn-group btn-group-lg">
