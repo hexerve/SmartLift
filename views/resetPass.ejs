@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<head>
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+    <script src="/main.js"></script>
+    <script src="/js/resetPass.js"></script>
+</head>
+
+<body>
+    <div class="body-container container">
+        <div class="row">
+            <div class="col-md-6">
+                <div id="list-msg"></div>
+                <form name="resetPass_form" id="resetPass_form">
+                    <div class="form-group row">
+                        <label for="password_reset" id="password_reset_label" class="col-sm-2 col-form-label">Password</label>
+                        <div class="col-sm-7">
+                            <input type="password" class="form-control" name="password" id="password_reset" placeholder="Password">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="new_password_reset" id="new_password_reset_label" class="col-sm-2 col-form-label">Password</label>
+                        <div class="col-sm-7">
+                            <input type="password" class="form-control" name="new_password" id="new_password_reset" placeholder="Password">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="conf_password_reset" id="conf_password_reset_label" class="col-sm-2 col-form-label">Confirm Password</label>
+                        <div class="col-sm-7">
+                            <input type="password" class="form-control" name="conf_password" id="conf_password_reset" placeholder="Confirm Password">
+                        </div>
+                    </div>                     
+                    <div class="wrapper text-center">
+                        <div class="btn-group btn-group-lg">
+                            <button type="button" id="reset-pass-btn" class="btn wobble-vertical">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>
