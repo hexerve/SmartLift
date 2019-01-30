@@ -5,7 +5,8 @@ var err = {
     update: {name: true, mobile: true},
     member: {email: true, name: true, mobile: true},
     reverify: {email: true},
-    forgetPass: {email: true}
+    forgetPass: {email: true},
+    set: {password: true, conf_password: true}
 }
 
 function setCookie(cname, cvalue, exdays) {
