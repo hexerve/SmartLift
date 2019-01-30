@@ -1,55 +1,29 @@
-<!DOCTYPE html>
-
-<head>
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
-        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
-
-    <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-    <!-- Popper JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
-
-    <!-- Latest compiled JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-
-    <script src="/main.js"></script>
-    <script src="/js/profile.js"></script>
-</head>
-
-<body>
-    <div class="body-container container">
-        <div class="row">
-            <div class="col-md-6">
-                <div id="list-msg"></div>
-                <form name="update" id="update_form">
-                    <div class="form-group row">
-                        <label for="name_update" id="name_update_label" class="col-sm-2 col-form-label">Name</label>
-                        <div class="col-sm-7">
-                            <input type="text" class="form-control" name="name" id="name_update" placeholder="name"
-                                minlength="3" maxlength="30">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="mobile_update" id="mobile_update_label" class="col-sm-2 col-form-label">Mobile</label>
-                        <div class="col-sm-7">
-                            <input type="number" class="form-control" name="mobile" id="mobile_update" placeholder="mobile"
-                                minlength="10">
-                        </div>
-                    </div>
-                    <div class="wrapper text-center">
-                        <div class="btn-group btn-group-lg">
-                            <button type="button" id="update-btn" class="btn wobble-vertical">Update</button>
-                        </div>
-                    </div>
-                </form>
+<% include partials/header.ejs %>
+<div class="row">
+    <div class="col-md-6">
+        <div id="list-msg"></div>
+        <form name="update" id="update_form">
+            <div class="form-group row">
+                <label for="name_update" id="name_update_label" class="col-sm-2 col-form-label">Name</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" name="name" id="name_update" placeholder="name" minlength="3"
+                        maxlength="30">
+                </div>
             </div>
-        </div>
-
+            <div class="form-group row">
+                <label for="mobile_update" id="mobile_update_label" class="col-sm-2 col-form-label">Mobile</label>
+                <div class="col-sm-7">
+                    <input type="number" class="form-control" name="mobile" id="mobile_update" placeholder="mobile"
+                        minlength="10">
+                </div>
+            </div>
+            <div class="wrapper text-center">
+                <div class="btn-group btn-group-lg">
+                    <button type="button" id="update-btn" class="btn wobble-vertical">Update</button>
+                </div>
+            </div>
+        </form>
     </div>
-</body>
+</div>
 
-</html>
+<%- include("partials/footer.ejs" ,{script:"/js/profile.js"}) %>

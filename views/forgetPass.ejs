@@ -1,47 +1,21 @@
-<!DOCTYPE html>
-
-<head>
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
-        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
-
-    <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-    <!-- Popper JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
-
-    <!-- Latest compiled JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-
-    <script src="/main.js"></script>
-    <script src="/js/forgetPass.js"></script>
-</head>
-
-<body>
-    <div class="body-container container">
-        <div class="row">
-            <div class="col-md-6">
-                <div id="list-msg"></div>
-                <form name="forgetPass_form" id="forgetPass_form">
-                    <div class="form-group row">
-                        <label for="email_verify" id="email_verify_label" class="col-sm-2 col-form-label">Email</label>
-                        <div class="col-sm-7">
-                            <input type="email" class="form-control" name="email" id="email_forgetPass" placeholder="Email">
-                        </div>
-                    </div>        
-                    <div class="wrapper text-center">
-                        <div class="btn-group btn-group-lg">
-                            <button type="button" id="forgetPass-btn" class="btn wobble-vertical">Send Password reset link</button>
-                        </div>
-                    </div>
-                </form>
+<% include partials/header.ejs %>
+<div class="row">
+    <div class="col-md-6">
+        <div id="list-msg"></div>
+        <form name="forgetPass_form" id="forgetPass_form">
+            <div class="form-group row">
+                <label for="email_verify" id="email_verify_label" class="col-sm-2 col-form-label">Email</label>
+                <div class="col-sm-7">
+                    <input type="email" class="form-control" name="email" id="email_forgetPass" placeholder="Email">
+                </div>
             </div>
-        </div>
-
+            <div class="wrapper text-center">
+                <div class="btn-group btn-group-lg">
+                    <button type="button" id="forgetPass-btn" class="btn wobble-vertical">Send Password reset link</button>
+                </div>
+            </div>
+        </form>
     </div>
-</body>
+</div>
 
-</html>
+<%- include("partials/footer.ejs" ,{script:"/js/forgetPass.js"}) %>

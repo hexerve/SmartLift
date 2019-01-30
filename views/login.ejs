@@ -1,103 +1,79 @@
-<!DOCTYPE html>
-
-<head>
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
-        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
-
-    <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-    <!-- Popper JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
-
-    <!-- Latest compiled JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-
-    <script src="/main.js"></script>
-    <script src="/js/login.js"></script>
-</head>
-
-<body>
-    <div class="container">
-        <form name="register" action="/register" id="register" method="post" enctype="multipart/form-data" onsubmit="return validate()">
-            <div class="form-group row">
-                <label for="rentAgreement" class="col-sm-2 col-form-label custom-file-label">Rent Agreement</label>
-                <div class="col-sm-7">
-                    <input type="file" class="form-control custom-file-input" name="rentAgreement" id="rentAgreement"
-                        placeholder="rent agreement">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="email_register" id="email_register_label" class="col-sm-2 col-form-label">Email</label>
-                <div class="col-sm-7">
-                    <input type="email" class="form-control" name="email" id="email_register" placeholder="Email">
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <label for="password_register" id="password_register_label" class="col-sm-2 col-form-label">Password</label>
-                <div class="col-sm-7">
-                    <input type="password" class="form-control" name="password" id="password_register" placeholder="Password">
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <label for="name_register" id="name_register_label" class="col-sm-2 col-form-label">Name</label>
-                <div class="col-sm-7">
-                    <input type="text" class="form-control" name="name" id="name_register" placeholder="name" minlength="3"
-                        maxlength="30">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="mobile_register" id="mobile_register_label" class="col-sm-2 col-form-label">Mobile</label>
-                <div class="col-sm-7">
-                    <input type="number" class="form-control" name="mobile" id="mobile_register" placeholder="mobile"
-                        minlength="10">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="floor_register" id="floor_register_label" class="col-sm-2 col-form-label">Floor</label>
-                <div class="col-sm-7">
-                    <input type="number" class="form-control" name="address.floor" id="floor_register" placeholder="floor">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="flat_register" id="flat_register_label" class="col-sm-2 col-form-label">Flat</label>
-                <div class="col-sm-7">
-                    <input type="number" class="form-control" name="address.flat" id="flat_register" placeholder="flat">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="building_register" id="building_register_label" class="col-sm-2 col-form-label">Building</label>
-                <div class="col-sm-7">
-                    <input type="text" class="form-control" name="address.building" id="building_register" placeholder="building">
-                </div>
-            </div>
-
-            <input type="submit">
-
-        </form>
-
-        <form name="login" id="login">
-            <div class="form-group row">
-                <label for="email_login" id="email_login_label" class="col-sm-2 col-form-label">Email</label>
-                <div class="col-sm-7">
-                    <input type="email" class="form-control" name="email" id="email_login" placeholder="Email">
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <label for="password_login" id="password_login_label" class="col-sm-2 col-form-label">Password</label>
-                <div class="col-sm-7">
-                    <input type="password" class="form-control" name="password" id="password_login" placeholder="Password">
-                </div>
-            </div>
-
-            <input type="button" value="Login" onclick="signIn()">
-
-        </form>
+<% include partials/header.ejs %>
+<form name="register" action="/register" id="register" method="post" enctype="multipart/form-data" onsubmit="return validate()">
+    <div class="form-group row">
+        <label for="rentAgreement" class="col-sm-2 col-form-label custom-file-label">Rent Agreement</label>
+        <div class="col-sm-7">
+            <input type="file" class="form-control custom-file-input" name="rentAgreement" id="rentAgreement"
+                placeholder="rent agreement">
+        </div>
     </div>
-</body>
+    <div class="form-group row">
+        <label for="email_register" id="email_register_label" class="col-sm-2 col-form-label">Email</label>
+        <div class="col-sm-7">
+            <input type="email" class="form-control" name="email" id="email_register" placeholder="Email">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="password_register" id="password_register_label" class="col-sm-2 col-form-label">Password</label>
+        <div class="col-sm-7">
+            <input type="password" class="form-control" name="password" id="password_register" placeholder="Password">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="name_register" id="name_register_label" class="col-sm-2 col-form-label">Name</label>
+        <div class="col-sm-7">
+            <input type="text" class="form-control" name="name" id="name_register" placeholder="name" minlength="3"
+                maxlength="30">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="mobile_register" id="mobile_register_label" class="col-sm-2 col-form-label">Mobile</label>
+        <div class="col-sm-7">
+            <input type="number" class="form-control" name="mobile" id="mobile_register" placeholder="mobile" minlength="10">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="floor_register" id="floor_register_label" class="col-sm-2 col-form-label">Floor</label>
+        <div class="col-sm-7">
+            <input type="number" class="form-control" name="address.floor" id="floor_register" placeholder="floor">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="flat_register" id="flat_register_label" class="col-sm-2 col-form-label">Flat</label>
+        <div class="col-sm-7">
+            <input type="number" class="form-control" name="address.flat" id="flat_register" placeholder="flat">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="building_register" id="building_register_label" class="col-sm-2 col-form-label">Building</label>
+        <div class="col-sm-7">
+            <input type="text" class="form-control" name="address.building" id="building_register" placeholder="building">
+        </div>
+    </div>
+
+    <input type="submit">
+
+</form>
+
+<form name="login" id="login">
+    <div class="form-group row">
+        <label for="email_login" id="email_login_label" class="col-sm-2 col-form-label">Email</label>
+        <div class="col-sm-7">
+            <input type="email" class="form-control" name="email" id="email_login" placeholder="Email">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="password_login" id="password_login_label" class="col-sm-2 col-form-label">Password</label>
+        <div class="col-sm-7">
+            <input type="password" class="form-control" name="password" id="password_login" placeholder="Password">
+        </div>
+    </div>
+
+    <input type="button" value="Login" onclick="signIn()">
+
+</form>
+
+<%- include("partials/footer.ejs" ,{script:"/js/login.js"}) %>
