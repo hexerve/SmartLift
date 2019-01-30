@@ -97,13 +97,30 @@ $(function () {
                         }
                     }).fail(function (xhr, status, error) {
                         if (xhr.status === 0) {
-                            alert("Network error");
+                            $('#alert-removal').trigger('click');
+                            setTimeout(function () {
+                                $('#message').append(
+                                    '<div id="inner-message" class="alert alert-danger">' +
+                                    '<button id="alert-removal" type="button" class="close" data-dismiss="alert">&times;</button>' +
+                                    'Network error' +
+                                    '</div>'
+                                );
+                            }, 500);
+                            return;
                             return;
                         }
                     });
             }).fail(function (xhr, status, error) {
                 if (xhr.status === 0) {
-                    alert("Network error");
+                    $('#alert-removal').trigger('click');
+                    setTimeout(function () {
+                        $('#message').append(
+                            '<div id="inner-message" class="alert alert-danger">' +
+                            '<button id="alert-removal" type="button" class="close" data-dismiss="alert">&times;</button>' +
+                            'Network error' +
+                            '</div>'
+                        );
+                    }, 500);
                     return;
                 }
 
@@ -180,7 +197,15 @@ $(function () {
     //         }
     //     }).fail(function (xhr, status, error) {
     //         if (xhr.status === 0) {
-    //             alert("Network error");
+    //             $('#alert-removal').trigger('click');
+    // setTimeout(function () {
+    //     $('#message').append(
+    //         '<div id="inner-message" class="alert alert-danger">' +
+    //         '<button id="alert-removal" type="button" class="close" data-dismiss="alert">&times;</button>' +
+    //         'Network error' +
+    //         '</div>'
+    //     );
+    // }, 500);
     //             return;
     //         }
     //     });
@@ -198,7 +223,15 @@ $(function () {
             data: JSON.stringify(data),
             contentType: 'application/json',
             success: function (result) {
-                alert("Success");
+                $('#alert-removal').trigger('click');
+                setTimeout(function () {
+                    $('#message').append(
+                        '<div id="inner-message" class="alert alert-success">' +
+                        '<button id="alert-removal" type="button" class="close" data-dismiss="alert">&times;</button>' +
+                        'Success' +
+                        '</div>'
+                    );
+                }, 500);
                 $('#card_' + data.id).hide('slow', function () { $target.remove(); });
             },
             error: function (xhr, textStatus, errorThrown) {
@@ -214,7 +247,15 @@ $(function () {
                     }
                 }
 
-                alert(errMsg);
+                $('#alert-removal').trigger('click');
+                setTimeout(function () {
+                    $('#message').append(
+                        '<div id="inner-message" class="alert alert-danger">' +
+                        '<button id="alert-removal" type="button" class="close" data-dismiss="alert">&times;</button>' +
+                        errMsg +
+                        '</div>'
+                    );
+                }, 500);
             }
         });
     });
@@ -224,16 +265,40 @@ $(function () {
             function (data, status, xhr) {
                 console.log(data);
                 $("#revoke").val("");
-                alert("revoked successfully");
+                $('#alert-removal').trigger('click');
+                setTimeout(function () {
+                    $('#message').append(
+                        '<div id="inner-message" class="alert alert-success">' +
+                        '<button id="alert-removal" type="button" class="close" data-dismiss="alert">&times;</button>' +
+                        "Success" +
+                        '</div>'
+                    );
+                }, 500);
             }).fail(function (xhr, status, error) {
                 if (xhr.status === 0) {
-                    alert("Network error");
+                    $('#alert-removal').trigger('click');
+                    setTimeout(function () {
+                        $('#message').append(
+                            '<div id="inner-message" class="alert alert-danger">' +
+                            '<button id="alert-removal" type="button" class="close" data-dismiss="alert">&times;</button>' +
+                            'Network error' +
+                            '</div>'
+                        );
+                    }, 500);
                     return;
                 } else {
                     errMsg = JSON.parse(xhr.responseText).message;
                     errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
 
-                    alert(errMsg);
+                    $('#alert-removal').trigger('click');
+                    setTimeout(function () {
+                        $('#message').append(
+                            '<div id="inner-message" class="alert alert-danger">' +
+                            '<button id="alert-removal" type="button" class="close" data-dismiss="alert">&times;</button>' +
+                            errMsg +
+                            '</div>'
+                        );
+                    }, 500);
                 }
 
                 console.log(xhr);
@@ -256,16 +321,40 @@ $(function () {
                 let func = user_status ? "deactivate" : "activate";
                 $('#status').attr("onclick", func + '("' + email + '")')
 
-                alert("status updated!");
+                $('#alert-removal').trigger('click');
+                setTimeout(function () {
+                    $('#message').append(
+                        '<div id="inner-message" class="alert alert-success">' +
+                        '<button id="alert-removal" type="button" class="close" data-dismiss="alert">&times;</button>' +
+                        "Success" +
+                        '</div>'
+                    );
+                }, 500);
             }).fail(function (xhr, status, error) {
                 if (xhr.status === 0) {
-                    alert("Network error");
+                    $('#alert-removal').trigger('click');
+                    setTimeout(function () {
+                        $('#message').append(
+                            '<div id="inner-message" class="alert alert-danger">' +
+                            '<button id="alert-removal" type="button" class="close" data-dismiss="alert">&times;</button>' +
+                            'Network error' +
+                            '</div>'
+                        );
+                    }, 500);
                     return;
                 } else {
                     errMsg = JSON.parse(xhr.responseText).message;
                     errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
 
-                    alert(errMsg);
+                    $('#alert-removal').trigger('click');
+                    setTimeout(function () {
+                        $('#message').append(
+                            '<div id="inner-message" class="alert alert-danger">' +
+                            '<button id="alert-removal" type="button" class="close" data-dismiss="alert">&times;</button>' +
+                            errMsg +
+                            '</div>'
+                        );
+                    }, 500);
                 }
 
                 console.log(xhr);
@@ -285,8 +374,16 @@ $(function () {
 
     $(document).on('click', '#search-btn', function () {
         let email = $('#email_search').val();
-        if(err.search.email){
-            alert("please enter a valid email");
+        if (err.search.email) {
+            $('#alert-removal').trigger('click');
+            setTimeout(function () {
+                $('#message').append(
+                    '<div id="inner-message" class="alert alert-danger">' +
+                    '<button id="alert-removal" type="button" class="close" data-dismiss="alert">&times;</button>' +
+                    'Please correctly fill all the credentials' +
+                    '</div>'
+                );
+            }, 500);
             return;
         }
         $.get("../adminAcesss/user/email/" + email, {},
@@ -317,21 +414,46 @@ $(function () {
 
             }).fail(function (xhr, status, error) {
                 if (xhr.status === 0) {
-                    alert("Network error");
+                    $('#alert-removal').trigger('click');
+                    setTimeout(function () {
+                        $('#message').append(
+                            '<div id="inner-message" class="alert alert-danger">' +
+                            '<button id="alert-removal" type="button" class="close" data-dismiss="alert">&times;</button>' +
+                            'Network error' +
+                            '</div>'
+                        );
+                    }, 500);
                     return;
                 } else {
                     errMsg = JSON.parse(xhr.responseText).message;
                     errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
 
-alert(errMsg);                }
+                    $('#alert-removal').trigger('click');
+                    setTimeout(function () {
+                        $('#message').append(
+                            '<div id="inner-message" class="alert alert-danger">' +
+                            '<button id="alert-removal" type="button" class="close" data-dismiss="alert">&times;</button>' +
+                            errMsg +
+                            '</div>'
+                        );
+                    }, 500);
+                }
 
                 console.log(xhr);
             });
     });
 
     $(document).on('click', '#search-btn-mob', function () {
-        if(err.search.mobile){
-            alert("please enter a valid mobile");
+        if (err.search.mobile) {
+            $('#alert-removal').trigger('click');
+            setTimeout(function () {
+                $('#message').append(
+                    '<div id="inner-message" class="alert alert-danger">' +
+                    '<button id="alert-removal" type="button" class="close" data-dismiss="alert">&times;</button>' +
+                    'please enter a valid mobile' +
+                    '</div>'
+                );
+            }, 500);
             return;
         }
         let mobile = $('#mobile_search').val();
@@ -352,13 +474,30 @@ alert(errMsg);                }
 
             }).fail(function (xhr, status, error) {
                 if (xhr.status === 0) {
-                    alert("Network error");
+                    $('#alert-removal').trigger('click');
+                    setTimeout(function () {
+                        $('#message').append(
+                            '<div id="inner-message" class="alert alert-danger">' +
+                            '<button id="alert-removal" type="button" class="close" data-dismiss="alert">&times;</button>' +
+                            'Network error' +
+                            '</div>'
+                        );
+                    }, 500);
                     return;
                 } else {
                     errMsg = JSON.parse(xhr.responseText).message;
                     errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
 
-alert(errMsg);                }
+                    $('#alert-removal').trigger('click');
+                    setTimeout(function () {
+                        $('#message').append(
+                            '<div id="inner-message" class="alert alert-danger">' +
+                            '<button id="alert-removal" type="button" class="close" data-dismiss="alert">&times;</button>' +
+                            errMsg +
+                            '</div>'
+                        );
+                    }, 500);
+                }
 
                 console.log(xhr);
             });
@@ -382,7 +521,15 @@ alert(errMsg);                }
             data: JSON.stringify(data),
             contentType: 'application/json',
             success: function (result) {
-                alert("Success");
+                $('#alert-removal').trigger('click');
+                setTimeout(function () {
+                    $('#message').append(
+                        '<div id="inner-message" class="alert alert-success">' +
+                        '<button id="alert-removal" type="button" class="close" data-dismiss="alert">&times;</button>' +
+                        'Success' +
+                        '</div>'
+                    );
+                }, 500);
             },
             error: function (xhr, textStatus, errorThrown) {
                 var errMsg;
@@ -397,7 +544,15 @@ alert(errMsg);                }
                     }
                 }
 
-                alert(errMsg);
+                $('#alert-removal').trigger('click');
+                setTimeout(function () {
+                    $('#message').append(
+                        '<div id="inner-message" class="alert alert-danger">' +
+                        '<button id="alert-removal" type="button" class="close" data-dismiss="alert">&times;</button>' +
+                        errMsg +
+                        '</div>'
+                    );
+                }, 500);
             }
         });
     });
@@ -409,13 +564,21 @@ alert(errMsg);                }
         let isErr = Object.values(err.register);
         let isValid = true;
         isErr.forEach(element => {
-            if(element){
+            if (element) {
                 isValid = false;
             }
         });
 
-        if(!isValid){
-            alert("please correctly fill all the credentials");
+        if (!isValid) {
+            $('#alert-removal').trigger('click');
+            setTimeout(function () {
+                $('#message').append(
+                    '<div id="inner-message" class="alert alert-danger">' +
+                    '<button id="alert-removal" type="button" class="close" data-dismiss="alert">&times;</button>' +
+                    'Please correctly fill all the credentials' +
+                    '</div>'
+                );
+            }, 500);
             return;
         }
 
@@ -425,7 +588,15 @@ alert(errMsg);                }
             data: JSON.stringify(data),
             contentType: 'application/json',
             success: function (result) {
-                alert("Success");
+                $('#alert-removal').trigger('click');
+                setTimeout(function () {
+                    $('#message').append(
+                        '<div id="inner-message" class="alert alert-success">' +
+                        '<button id="alert-removal" type="button" class="close" data-dismiss="alert">&times;</button>' +
+                        'Success' +
+                        '</div>'
+                    );
+                }, 500);
             },
             error: function (xhr, textStatus, errorThrown) {
                 var errMsg;
@@ -440,7 +611,15 @@ alert(errMsg);                }
                     }
                 }
 
-                alert(errMsg);
+                $('#alert-removal').trigger('click');
+                setTimeout(function () {
+                    $('#message').append(
+                        '<div id="inner-message" class="alert alert-danger">' +
+                        '<button id="alert-removal" type="button" class="close" data-dismiss="alert">&times;</button>' +
+                        errMsg +
+                        '</div>'
+                    );
+                }, 500);
             }
         });
     });

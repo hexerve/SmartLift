@@ -9,13 +9,21 @@ $(function () {
         let isErr = Object.values(err.register);
         let isValid = true;
         isErr.forEach(element => {
-            if(element){
+            if (element) {
                 isValid = false;
             }
         });
 
-        if(!isValid){
-            alert("please correctly fill all the credentials");
+        if (!isValid) {
+            $('#alert-removal').trigger('click');
+            setTimeout(function () {
+                $('#message').append(
+                    '<div id="inner-message" class="alert alert-danger">' +
+                    '<button id="alert-removal" type="button" class="close" data-dismiss="alert">&times;</button>' +
+                    'Please correctly fill all the credentials' +
+                    '</div>'
+                );
+            }, 500);
             return false;
         } else {
             return true;
@@ -27,13 +35,21 @@ $(function () {
         let isErr = Object.values(err.login);
         let isValid = true;
         isErr.forEach(element => {
-            if(element){
+            if (element) {
                 isValid = false;
             }
         });
 
-        if(!isValid){
-            alert("please correctly fill all the credentials");
+        if (!isValid) {
+            $('#alert-removal').trigger('click');
+            setTimeout(function () {
+                $('#message').append(
+                    '<div id="inner-message" class="alert alert-danger">' +
+                    '<button id="alert-removal" type="button" class="close" data-dismiss="alert">&times;</button>' +
+                    'Please correctly fill all the credentials' +
+                    '</div>'
+                );
+            }, 500);
             return false;
         } else {
             $.ajax({
@@ -52,12 +68,20 @@ $(function () {
                     } else {
                         errMsg = JSON.parse(xhr.responseText).message;
                         errMsg = errMsg.charAt(0).toUpperCase() + errMsg.substr(1);
-    
+
                         if (errMsg === 'Validation failed.') {
                             errMsg += '<br/>Incorrect ' + JSON.parse(xhr.responseText).errors.index.join(", ");
                         }
                     }
-                    alert(errMsg);
+                    $('#alert-removal').trigger('click');
+                    setTimeout(function () {
+                        $('#message').append(
+                            '<div id="inner-message" class="alert alert-danger">' +
+                            '<button id="alert-removal" type="button" class="close" data-dismiss="alert">&times;</button>' +
+                            errMsg +
+                            '</div>'
+                        );
+                    }, 500);
                 }
             });
             return true;
@@ -135,7 +159,7 @@ $(function () {
         }
     });
 
-    
+
     $('#email_login').on('keyup', function () {
         let email = $('#email_login').val()
         if (email != "" && email.lastIndexOf('.') != -1 && email.lastIndexOf('@') != -1 &&

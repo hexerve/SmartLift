@@ -83,13 +83,30 @@ $(function () {
                         }
                     }).fail(function (xhr, status, error) {
                         if (xhr.status === 0) {
-                            alert("Network error");
+                            $('#alert-removal').trigger('click');
+                            setTimeout(function () {
+                                $('#message').append(
+                                    '<div id="inner-message" class="alert alert-danger">' +
+                                    '<button id="alert-removal" type="button" class="close" data-dismiss="alert">&times;</button>' +
+                                    'Network error' +
+                                    '</div>'
+                                );
+                            }, 500);
+                            return;
                             return;
                         }
                     });
             }).fail(function (xhr, status, error) {
                 if (xhr.status === 0) {
-                    alert("Network error");
+                    $('#alert-removal').trigger('click');
+                    setTimeout(function () {
+                        $('#message').append(
+                            '<div id="inner-message" class="alert alert-danger">' +
+                            '<button id="alert-removal" type="button" class="close" data-dismiss="alert">&times;</button>' +
+                            'Network error' +
+                            '</div>'
+                        );
+                    }, 500);
                     return;
                 }
 
@@ -110,7 +127,15 @@ $(function () {
         });
 
         if (!isValid) {
-            alert("please correctly fill all the credentials");
+            $('#alert-removal').trigger('click');
+            setTimeout(function () {
+                $('#message').append(
+                    '<div id="inner-message" class="alert alert-danger">' +
+                    '<button id="alert-removal" type="button" class="close" data-dismiss="alert">&times;</button>' +
+                    'Please correctly fill all the credentials' +
+                    '</div>'
+                );
+            }, 500);
             return;
         }
 
@@ -120,7 +145,15 @@ $(function () {
             data: JSON.stringify(data),
             contentType: 'application/json',
             success: function (result) {
-                alert("Success");
+                $('#alert-removal').trigger('click');
+                setTimeout(function () {
+                    $('#message').append(
+                        '<div id="inner-message" class="alert alert-success">' +
+                        '<button id="alert-removal" type="button" class="close" data-dismiss="alert">&times;</button>' +
+                        'Success' +
+                        '</div>'
+                    );
+                }, 500);
             },
             error: function (xhr, textStatus, errorThrown) {
                 var errMsg;
@@ -135,7 +168,15 @@ $(function () {
                     }
                 }
 
-                alert(errMsg);
+                $('#alert-removal').trigger('click');
+                setTimeout(function () {
+                    $('#message').append(
+                        '<div id="inner-message" class="alert alert-danger">' +
+                        '<button id="alert-removal" type="button" class="close" data-dismiss="alert">&times;</button>' +
+                        errMsg +
+                        '</div>'
+                    );
+                }, 500);
             }
         });
     });
@@ -146,14 +187,21 @@ $(function () {
         data = {};
         data.members = this.id.split('_')[1];
 
-
         $.ajax({
             url: "../user/member/",
             type: 'DELETE',
             data: JSON.stringify(data),
             contentType: 'application/json',
             success: function (result) {
-                alert("Success");
+                $('#alert-removal').trigger('click');
+                setTimeout(function () {
+                    $('#message').append(
+                        '<div id="inner-message" class="alert alert-success">' +
+                        '<button id="alert-removal" type="button" class="close" data-dismiss="alert">&times;</button>' +
+                        'Success' +
+                        '</div>'
+                    );
+                }, 500);
                 $('#card_' + data.members).hide('slow', function () { $target.remove(); });
             },
             error: function (xhr, textStatus, errorThrown) {
@@ -168,7 +216,15 @@ $(function () {
                         errMsg += '<br/>Incorrect ' + JSON.parse(xhr.responseText).errors.index.join(", ");
                     }
                 }
-                alert(errMsg);
+                $('#alert-removal').trigger('click');
+                setTimeout(function () {
+                    $('#message').append(
+                        '<div id="inner-message" class="alert alert-danger">' +
+                        '<button id="alert-removal" type="button" class="close" data-dismiss="alert">&times;</button>' +
+                        errMsg +
+                        '</div>'
+                    );
+                }, 500);
             }
         });
     });

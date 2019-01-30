@@ -1,13 +1,13 @@
 var err = {
     register: { name: true, mobile: true, floor: true, flat: true, building: true, email: true, password: true },
     login: { email: true, password: true },
-    search: {email: true, mobile: true},
-    update: {name: true, mobile: true},
-    member: {email: true, name: true, mobile: true},
-    reverify: {email: true},
-    forgetPass: {email: true},
-    set: {password: true, conf_password: true},
-    reset: {password: true, new_password: true, conf_password: true}
+    search: { email: true, mobile: true },
+    update: { name: true, mobile: true },
+    member: { email: true, name: true, mobile: true },
+    reverify: { email: true },
+    forgetPass: { email: true },
+    set: { password: true, conf_password: true },
+    reset: { password: true, new_password: true, conf_password: true }
 }
 
 function setCookie(cname, cvalue, exdays) {
@@ -33,11 +33,11 @@ function getCookie(cname) {
     return "";
 }
 
-function getFormData(form){
+function getFormData(form) {
     var unindexed_array = form.serializeArray();
     var indexed_array = {};
 
-    $.map(unindexed_array, function(n, i){
+    $.map(unindexed_array, function (n, i) {
         indexed_array[n['name']] = n['value'];
     });
 
@@ -62,7 +62,7 @@ function validationDisplay(status, field, form) {
 
 $(function () {
 
-    logout = function() {
+    logout = function () {
         $.ajaxSetup({
             headers: {
                 'authorization': getCookie("token")
@@ -70,17 +70,33 @@ $(function () {
         });
         $.get("../logout", {},
             function (data, status, xhr) {
-    
+
                 setCookie("token", "", -1);
-    
+
             }).fail(function (xhr, status, error) {
                 if (xhr.status === 0) {
-                    alert("Network error");
+                    $('#alert-removal').trigger('click');
+                    setTimeout(function () {
+                        $('#message').append(
+                            '<div id="inner-message" class="alert alert-danger">' +
+                            '<button id="alert-removal" type="button" class="close" data-dismiss="alert">&times;</button>' +
+                            'Network error' +
+                            '</div>'
+                        );
+                    }, 500);
                     return;
                 }
-                alert("Some error occured");
+                $('#alert-removal').trigger('click');
+                setTimeout(function () {
+                    $('#message').append(
+                        '<div id="inner-message" class="alert alert-danger">' +
+                        '<button id="alert-removal" type="button" class="close" data-dismiss="alert">&times;</button>' +
+                        'Some error occured' +
+                        '</div>'
+                    );
+                }, 500);
                 return;
             });
     };
-    
+
 });

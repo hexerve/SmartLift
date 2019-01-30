@@ -13,7 +13,7 @@ $(function () {
         $.get("../user", {},
             function (data, status, xhr) {
                 console.log(data);
-                if(data.results.user.isAdmin === true){
+                if (data.results.user.isAdmin === true) {
                     window.location = '/admin';
                 }
 
@@ -25,13 +25,21 @@ $(function () {
 
                 // currentUserID = data.results.user._id;
             }).fail(function (xhr, status, error) {
-            if (xhr.status === 0) {
-                alert("Network error");
-                return;
-            }
+                if (xhr.status === 0) {
+                    $('#alert-removal').trigger('click');
+                    setTimeout(function () {
+                        $('#message').append(
+                            '<div id="inner-message" class="alert alert-danger">' +
+                            '<button id="alert-removal" type="button" class="close" data-dismiss="alert">&times;</button>' +
+                            'Network error' +
+                            '</div>'
+                        );
+                    }, 500);
+                    return;
+                }
 
-            setCookie("token", "", -1);
-            window.location.href = "/login";
-        });
+                setCookie("token", "", -1);
+                window.location.href = "/login";
+            });
     }
 });

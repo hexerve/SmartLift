@@ -16,7 +16,15 @@ $(function () {
         });
 
         if (!isValid) {
-            alert("please correctly fill all the credentials correctly");
+            $('#alert-removal').trigger('click');
+            setTimeout(function () {
+                $('#message').append(
+                    '<div id="inner-message" class="alert alert-danger">' +
+                    '<button id="alert-removal" type="button" class="close" data-dismiss="alert">&times;</button>' +
+                    'Please correctly fill all the credentials' +
+                    '</div>'
+                );
+            }, 500);
             return;
         }
 
@@ -35,7 +43,15 @@ $(function () {
             data: JSON.stringify(data),
             contentType: 'application/json',
             success: function (data) {
-                alert("Success");
+                $('#alert-removal').trigger('click');
+                setTimeout(function () {
+                    $('#message').append(
+                        '<div id="inner-message" class="alert alert-success">' +
+                        '<button id="alert-removal" type="button" class="close" data-dismiss="alert">&times;</button>' +
+                        'Success' +
+                        '</div>'
+                    );
+                }, 500);
                 window.location.href = "/login";
             },
             error: function (xhr, textStatus, errorThrown) {
@@ -50,7 +66,15 @@ $(function () {
                         errMsg += '<br/>Incorrect ' + JSON.parse(xhr.responseText).errors.index.join(", ");
                     }
                 }
-                alert("Netwok error");
+                $('#alert-removal').trigger('click');
+                setTimeout(function () {
+                    $('#message').append(
+                        '<div id="inner-message" class="alert alert-danger">' +
+                        '<button id="alert-removal" type="button" class="close" data-dismiss="alert">&times;</button>' +
+                        'Network error' +
+                        '</div>'
+                    );
+                }, 500);
             }
         });
     });
