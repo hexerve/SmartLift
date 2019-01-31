@@ -118,6 +118,11 @@ $(function () {
     $(document).on('click', '#add-btn', function () {
         let data = getFormData($('#create_member'));
 
+        var $inputs = $('#create_member :input');
+        $inputs.each(function (index) {
+            $(this).keyup()
+        });
+
         let isErr = Object.values(err.member);
         let isValid = true;
         isErr.forEach(element => {

@@ -39,6 +39,11 @@ $(function () {
     $(document).on('click', '#reset-pass-btn', function () {
         let form = getFormData($('#resetPass_form'));
 
+        var $inputs = $('#resetPass_form :input');
+        $inputs.each(function (index) {
+            $(this).keyup()
+        });
+
         let isErr = Object.values(err.reset);
         let isValid = true;
         isErr.forEach(element => {

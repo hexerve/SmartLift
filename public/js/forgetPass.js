@@ -9,6 +9,11 @@ $(function () {
     $(document).on('click', '#forgetPass-btn', function () {
         let data = getFormData($('#forgetPass_form'));
 
+        var $inputs = $('#forgetPass_form :input');
+        $inputs.each(function (index) {
+            $(this).keyup()
+        });
+
         let isErr = Object.values(err.forgetPass);
         let isValid = true;
         isErr.forEach(element => {

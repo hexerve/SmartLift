@@ -6,6 +6,11 @@ $(function () {
     }
 
     validate = function () {
+        var $inputs = $('#register :input');
+        $inputs.each(function (index) {
+            $(this).keyup()
+        });
+
         let isErr = Object.values(err.register);
         let isValid = true;
         isErr.forEach(element => {
@@ -32,6 +37,11 @@ $(function () {
     }
 
     signIn = function () {
+        var $inputs = $('#login :input');
+        $inputs.each(function (index) {
+            $(this).keyup()
+        });
+
         let isErr = Object.values(err.login);
         let isValid = true;
         isErr.forEach(element => {

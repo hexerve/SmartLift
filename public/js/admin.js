@@ -210,7 +210,7 @@ $(function () {
     //         }
     //     });
 
-    updateUser = function(user){
+    updateUser = function (user) {
         $('#email_updateUser').val(user.email);
         $('#mobile_updateUser').val(user.mobile);
         $('#name_updateUser').val(user.name);
@@ -390,6 +390,7 @@ $(function () {
 
     $(document).on('click', '#search-btn', function () {
         let email = $('#email_search').val();
+        $('#email_search').keyup();
         if (err.search.email) {
             $('#alert-removal').trigger('click');
             setTimeout(function () {
@@ -445,6 +446,7 @@ $(function () {
     });
 
     $(document).on('click', '#search-btn-mob', function () {
+        $('#mobile_search').keyup();
         if (err.search.mobile) {
             $('#alert-removal').trigger('click');
             setTimeout(function () {
@@ -499,6 +501,11 @@ $(function () {
 
     $(document).on('click', '#update-btn', function () {
         let data = getFormData($('#admin_update'));
+
+        var $inputs = $('#admin_update :input');
+        $inputs.each(function (index) {
+            $(this).keyup()
+        });
 
         let isErr = Object.values(err.updateUser);
         let isValid = true;
@@ -566,6 +573,11 @@ $(function () {
 
     $(document).on('click', '#create-btn', function () {
         let data = getFormData($('#admin_register'));
+
+        var $inputs = $('#admin_register :input');
+        $inputs.each(function (index) {
+            $(this).keyup()
+        });
 
         let isErr = Object.values(err.register);
         let isValid = true;

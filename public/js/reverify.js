@@ -8,6 +8,11 @@ $(function () {
     $(document).on('click', '#reverify-btn', function () {
         let data = getFormData($('#reverify_form'));
 
+        var $inputs = $('#reverify_form :input');
+        $inputs.each(function (index) {
+            $(this).keyup()
+        });
+
         let isErr = Object.values(err.reverify);
         let isValid = true;
         isErr.forEach(element => {

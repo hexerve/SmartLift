@@ -38,6 +38,11 @@ $(function () {
 
     $(document).on('click', '#update-btn', function () {
         let data = getFormData($('#update_form'));
+        
+        var $inputs = $('#update_form :input');
+        $inputs.each(function (index) {
+            $(this).keyup()
+        });
 
         let isErr = Object.values(err.update);
         let isValid = true;

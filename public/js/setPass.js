@@ -7,6 +7,11 @@ $(function () {
 
         let data = getFormData($('#setPass_form'));
 
+        var $inputs = $('#setPass_form :input');
+        $inputs.each(function (index) {
+            $(this).keyup()
+        });
+
         let isErr = Object.values(err.set);
         let isValid = true;
         isErr.forEach(element => {
