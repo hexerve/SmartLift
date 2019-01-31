@@ -3,6 +3,7 @@ var err = {
     login: { email: true, password: true },
     search: { email: true, mobile: true },
     update: { name: true, mobile: true },
+    updateUser: {name: true, mobile: true, floor: true, flat: true, building: true, email: true},
     member: { email: true, name: true, mobile: true },
     reverify: { email: true },
     forgetPass: { email: true },

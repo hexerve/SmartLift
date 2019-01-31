@@ -1,4 +1,4 @@
-var display, revoke, activate, deactivate, changeStatus;
+var display, revoke, activate, deactivate, changeStatus, updateUser;
 
 $(function () {
     if (getCookie("token") === "") {
@@ -210,6 +210,22 @@ $(function () {
     //         }
     //     });
 
+    updateUser = function(user){
+        $('#email_updateUser').val(user.email);
+        $('#mobile_updateUser').val(user.mobile);
+        $('#name_updateUser').val(user.name);
+        $('#flat_updateUser').val(user.address.flat);
+        $('#floor_updateUser').val(user.address.floor);
+        $('#building_updateUser').val(user.address.building);
+        $('#isadmin_updateUser').val("" + user.isAdmin);
+        $('#session_updateUser').val((user.last_login_timestamp === 0) ? "" : new Date(user.last_login_timestamp).toLocaleString());
+        $('#revoke_count').text("revoke(" + user.revoke_count + ")?")
+        $('#active_updateUser').val(user.active ? "true" : "false");
+        $('[data-toggle="tooltip"]').tooltip();
+
+        $('#revoke_count').attr("onclick", 'revoke("' + user.email + '")')
+    }
+
     $(document).on('click', '.verify', function (e) {
         e.preventDefault();
         e.stopPropagation();
@@ -395,22 +411,7 @@ $(function () {
                 $('.create-users').css('display', 'none');
                 $('.update-users').css('display', 'block');
 
-                $('#email1').val(data.results.user.email);
-                $('#mob1').val(data.results.user.mobile);
-                $('#name1').val(data.results.user.name);
-                $('#flat1').val(data.results.user.address.flat);
-                $('#floor1').val(data.results.user.address.floor);
-                $('#building1').val(data.results.user.address.building);
-                $('#isadmin1').val("" + data.results.user.isAdmin);
-                $('#revoke').val((last_login === 0) ? "" : new Date(last_login).toLocaleString());
-                $('#revoke_count').text("revoke(" + data.results.user.revoke_count + ")?")
-                $('#status').text(data.results.user.active ? "active" : "deactive");
-                $('#timestamp').attr('title', "" + new Date(data.results.user.expiresOn));
-                $('[data-toggle="tooltip"]').tooltip();
-
-                let func = data.results.user.active ? "deactivate" : "activate";
-                $('#revoke_count').attr("onclick", 'revoke("' + data.results.user.email + '")')
-                $('#status').attr("onclick", func + '("' + data.results.user.email + '")')
+                updateUser(data.results.user);
 
             }).fail(function (xhr, status, error) {
                 if (xhr.status === 0) {
@@ -463,14 +464,7 @@ $(function () {
 
                 $('.create-users').css('display', 'none');
                 $('.update-users').css('display', 'block');
-
-                $('#email1').val(data.results.user.email);
-                $('#name').val(data.results.user.name);
-                $('#plan').val(data.results.user.plan);
-                $('#isadmin').val("" + data.results.user.isAdmin);
-                $('#days').val(data.results.user.expires);
-                $('#timestamp').attr('title', "" + new Date(data.results.user.expiresOn));
-                $('[data-toggle="tooltip"]').tooltip();
+                updateUser(data.results.user);
 
             }).fail(function (xhr, status, error) {
                 if (xhr.status === 0) {
@@ -504,16 +498,28 @@ $(function () {
     });
 
     $(document).on('click', '#update-btn', function () {
-        let data = {};
-        data.email = $('#email1').val();
-        data.name = $('#name1').val();
-        data.mobile = $('#mob1').val();
-        data.address = {
-            flat: $('#flat1').val(),
-            floor: $('#floor1').val(),
-            building: $('#building1').val()
-        };
-        data.isAdmin = $('#isadmin1').val();
+        let data = getFormData($('#admin_update'));
+
+        let isErr = Object.values(err.updateUser);
+        let isValid = true;
+        isErr.forEach(element => {
+            if (element) {
+                isValid = false;
+            }
+        });
+
+        if (!isValid) {
+            $('#alert-removal').trigger('click');
+            setTimeout(function () {
+                $('#message').append(
+                    '<div id="inner-message" class="alert alert-danger">' +
+                    '<button id="alert-removal" type="button" class="close" data-dismiss="alert">&times;</button>' +
+                    'Please correctly fill all the credentials' +
+                    '</div>'
+                );
+            }, 500);
+            return;
+        }
 
         $.ajax({
             url: "../adminAcesss/user",
@@ -714,5 +720,67 @@ $(function () {
             validationDisplay(true, 'mobile', "search");
         }
     });
+
+    $('#name_updateUser').on('keyup', function () {
+        let name = $('#name_updateUser').val()
+        if (name.length < 3) {
+            validationDisplay(false, 'name', "updateUser");
+        } else if (name.length > 30) {
+            validationDisplay(false, 'name', "updateUser");
+        } else {
+            validationDisplay(true, 'name', "updateUser");
+        }
+    });
+
+    $('#mobile_updateUser').on('keyup', function () {
+        let mobile = $('#mobile_updateUser').val()
+        if (isNaN(mobile)) {
+            validationDisplay(false, 'mobile', "updateUser");
+        } else if (mobile.length < 10) {
+            validationDisplay(false, 'mobile', "updateUser");
+        } else {
+            validationDisplay(true, 'mobile', "updateUser");
+        }
+    });
+
+    $('#floor_updateUser').on('keyup', function () {
+        let floor = $('#floor_updateUser').val()
+        if (isNaN(floor)) {
+            validationDisplay(false, 'floor', "updateUser");
+        } else {
+            validationDisplay(true, 'floor', "updateUser");
+        }
+    });
+
+    $('#flat_updateUser').on('keyup', function () {
+        let flat = $('#flat_updateUser').val()
+        if (isNaN(flat)) {
+            validationDisplay(false, 'flat', "updateUser");
+        } else {
+            validationDisplay(true, 'flat', "updateUser");
+        }
+    });
+
+    $('#building_updateUser').on('keyup', function () {
+        let building = $('#building_updateUser').val()
+        if (building.length < 3) {
+            validationDisplay(false, 'building', "updateUser");
+        } else if (building.length > 30) {
+            validationDisplay(false, 'building', "updateUser");
+        } else {
+            validationDisplay(true, 'building', "updateUser");
+        }
+    });
+
+    $('#email_updateUser').on('keyup', function () {
+        let email = $('#email_updateUser').val()
+        if (email != "" && email.lastIndexOf('.') != -1 && email.lastIndexOf('@') != -1 &&
+            email.lastIndexOf('.') - email.lastIndexOf("@") > 2) {
+            validationDisplay(true, 'email', "updateUser");
+        } else {
+            validationDisplay(false, 'email', "updateUser");
+        }
+    });
+
 
 });
