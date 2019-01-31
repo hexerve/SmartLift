@@ -70,8 +70,8 @@ $(function () {
         });
         $.get("../logout", {},
             function (data, status, xhr) {
-
                 setCookie("token", "", -1);
+                window.location.href = "/login";
 
             }).fail(function (xhr, status, error) {
                 if (xhr.status === 0) {
