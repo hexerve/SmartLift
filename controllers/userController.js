@@ -27,6 +27,18 @@ let addMemberToList = function (userId, memberId) {
     })
 }
 
+let otp = function () {
+    var val = Math.floor(1000 + Math.random() * 9000);
+    return val;
+}
+
+let minuteFromNow = function () {
+    var timeObject = new Date();
+    timeObject.setTime(timeObject.getTime() + 1000 * 60);
+    return timeObject;
+};
+
+
 module.exports.register = function (req, res) {
 
     //  console.log(req)
@@ -202,6 +214,11 @@ module.exports.current_user = function (req, res) {
     AuthoriseUser.getUser(req, res, function (user) {
         user.password = undefined;
         user.__v = undefined;
+        if(user.lift_otp && user.lift_otp.expires >= Date.now()){
+            
+        } else {
+            user.lift_otp = undefined;
+        }
         results = {
             user: user
         };
@@ -956,3 +973,25 @@ module.exports.addMember = function (req, res) {
     });
 };
 
+module.exports.getOTP = function (req, res) {
+    AuthoriseUser.getUser(req, res, function (user) {
+        let OTP = otp();
+        let expires = minuteFromNow();
+        User.findByIdAndUpdate(user._id, {
+            'lift_otp.otp': OTP,
+            'lift_otp.expires': expires
+        }, function (err, result) {
+            if (err) {
+                return responses.errorMsg(res, 500, "Unexpected Error", "unexpected error.", null);
+            }
+
+            return responses.successMsg(res, {
+                lift_otp: {
+                    otp: OTP,
+                    expires: expires 
+                }
+            });
+
+        });
+    });
+};

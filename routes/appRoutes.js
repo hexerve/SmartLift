@@ -54,6 +54,8 @@ module.exports = function (app) {
 
     app.post("/reverify", User.sendVerificationLink);
 
+    app.get("/getOTP", VerifyToken, User.getOTP);
+    
     app.put("/password/reset", VerifyToken, User.changePassword);
 
     app.get("/password/forget", function (req, res) {
